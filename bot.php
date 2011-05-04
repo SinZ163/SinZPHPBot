@@ -1,10 +1,10 @@
 ﻿<?php
-	class ylt_bot {
+	class bot {
 		private $server = "";
 		private $port = 0;
 		private $user = "";
 		private $realname = "";
-		public function ylt_bot($server="irc.synirc.net", $port = 6667, $nick = "MCABot", $user = "MCABot", $realname = "MCABot", $startchan = "#bottest") {
+		public function bot($server="irc.synirc.net", $port = 6667, $nick = "MCABot", $user = "MCABot", $realname = "MCABot", $startchan = "#bottest") {
 			// Server
 			echo "Server: ";
 			$temp[server] = trim(fgets(STDIN));
@@ -134,7 +134,7 @@
 		}
 	}
 	
-	class ylt_core {
+	class core {
 		private $bot = null;
 		public function plugin_registered($bot) {
 			$this->bot = $bot;
@@ -154,7 +154,7 @@
 			}
 		}
 	}
-	class ylt_command {
+	class command {
 		private $bot = null;
 		public function plugin_registered($bot) {
 			$this->bot = $bot;
@@ -230,14 +230,14 @@
 			$this->bot = $bot;
 		}
 		public function command_reload($user, $channel, $args) {
-			$bot->plugin_register(ylt_command());
+			$bot->plugin_register(command());
 			$this->bot->send_message("", "PRIVMSG", $channel, "Reloaded");
 		}
 	}
 	
-	$bot = new ylt_bot(); //start bot and use defaults.
-	$bot->plugin_register(new ylt_core());
-	$bot->plugin_register(new ylt_command());
+	$bot = new bot(); //start bot and use defaults.
+	$bot->plugin_register(new core());
+	$bot->plugin_register(new command());
 	$bot->plugin_register(new sinz_reload());
 	$bot->start();
 ?>
