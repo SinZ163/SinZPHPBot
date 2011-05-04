@@ -198,7 +198,7 @@
 			$this->bot->say_message($channel, $data["lhs"]." = ".$data["rhs"]);	
 		}
 		public function command_rss($user, $channel, $args) {
-			require_once("/plugins/sinz/rss/plugin.php");
+			require_once("/plugins/rss/plugin.php");
 			$rssarray = SinZ_RSS($args[0], $channel);
 			
 			
