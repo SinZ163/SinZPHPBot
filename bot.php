@@ -4,40 +4,14 @@
 		private $port = 0;
 		private $user = "";
 		private $realname = "";
-		public function bot($server="irc.synirc.net", $port = 6667, $nick = "MCABot", $user = "MCABot", $realname = "MCABot", $startchan = "#bottest") {
-			// Server
-			echo "Server: ";
-			$temp[server] = trim(fgets(STDIN));
-			if ($temp[server] == "synirc") {
-				$server = ("irc.synirc.net");
-			}
-			else if ($temp[server] == "esper") {
-				$server = ("irc.esper.net");
-			}
-			else $server = ("irc.synirc.net");
-			// USER
-			echo "Who is using this bot?: ";
-			$temp[user] = trim(fgets(STDIN));
-			if ($temp[user] == "SinZ") {
-				$nick = ("MCABot");
-				$user = ("MCABot");
-				$realname = ("MCABot");
-			}
-			else if ($temp[user] == "Blue") {
-				$nick = ("cloneBot");
-				$user = ("cloneBot");
-				$realname = ("Clonebot");
-			}
-			else if ($temp[user] == "EagleYS") {
-			}
-			else {
-				$nick = ("MCABot");
-				$user = ("MCABot");
-				$realname = ("MCABot");
-			}
-			echo "Channel: ";
-			$startchan = trim(fgets(STDIN));
-			//Parse to script
+		public function bot($server="irc.esper.net", $port = 6667, $nick = "MCABot", $user = "MCABot", $realname = "MCABot", $startchan = "#SinZBot") {
+			/*$config = file('config.txt'); 
+			$server = $this->removelb($config[0]);
+			$port = $this->removelb($config[1]);
+			$nick = $this->removelb($config[2]);
+			$user = $this->removelb($config[3]);
+			$realname = $this->removelb($config[4]);
+			$startchan = $this->removelb($config[5]); */
 			$this->server = $server;
 			$this->port = $port;
 			$this->nick = $nick;
@@ -122,6 +96,9 @@
 		public function say_message($who, $msg) {
 			$this->send_message("","PRIVMSG", $who, ":".$msg);
 		}
+		public function removelb($sting) {
+			return (string)str_replace(array("\r", "\r\n", "\n"), '', $string);
+		}
 		public function start() {
 			if (!$this->sock) { $this->connect(); }
 			while ($line = fgets($this->sock)) {
@@ -187,6 +164,9 @@
 			$echo = implode(" ",$args);
 			$this->bot->say_message($channel, $echo);
 		}
+		public function command_hug($user, $channel, $args) {
+			$this->bot->say_message($channel, "\u0001Hugs ".$args[0]."\u0001");
+		}
 		public function command_calc($user, $channel, $args) {
 			$calc = implode(" ",$args);
 			$data = file_get_contents("http://www.google.com/ig/calculator?hl=en&q=".urlencode($calc));
@@ -217,7 +197,8 @@
 			$this->bot->say_message($channel, $txt[1]." (".$args[0].")");
 		}
 		public function command_eval($user, $channel, $args) {
-			$this->bot->say_message($channel, eval("return ".substr($message,5)));
+			$msg = implode(" ", $args);
+			$this->bot->say_message($channel, eval("return ".substr($msg,5)));
 		}
 		public function command_countdown($user, $channel, $args) {
 			require_once("countdown.php");

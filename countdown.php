@@ -28,9 +28,13 @@ function countdown($year, $month, $day, $hour, $minute)
   $minutes_left = floor(($difference - $days_left*60*60*24 - $hours_left*60*60)/60);
   
   // OUTPUT
+  $msg = array();
   $msg1 =  "Today's date ".date("F j, Y, g:i a")."<br/>";
   $msg2 =  "Countdown date ".date("F j, Y, g:i a",$the_countdown_date)."<br/>";
   $msg3 =  "Countdown ".$days_left." days ".$hours_left." hours ".$minutes_left." minutes left";
-  $this->bot->send_message("","PRIVMSG", $channel, $msg1, $msg2, $msg3);
+  array_push($msg, $msg1);
+  array_push($msg, $msg2);
+  array_push($msg, $msg3);
+  return $msg;
 }
 ?>
