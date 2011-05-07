@@ -1,17 +1,21 @@
 ﻿<?php
+set_time_limit(0);
+ini_set('display_errors', 'on');
+// Lets start this thing!
 	class bot {
 		private $server = "";
 		private $port = 0;
 		private $user = "";
 		private $realname = "";
-		public function bot($server="irc.esper.net", $port = 6667, $nick = "MCABot", $user = "MCABot", $realname = "MCABot", $startchan = "#SinZBot") {
+		public function bot($server="irc.esper.net", $port = 6667, $nick = "MCABot", $user = "MCABot", $realname = "MCABot", $startchan = "#MineBot") {
 			/*$config = file('config.txt'); 
 			$server = $this->removelb($config[0]);
 			$port = $this->removelb($config[1]);
 			$nick = $this->removelb($config[2]);
 			$user = $this->removelb($config[3]);
 			$realname = $this->removelb($config[4]);
-			$startchan = $this->removelb($config[5]); */
+			$startchan = $this->removelb($config[5]);
+			i suck at config!*/
 			$this->server = $server;
 			$this->port = $port;
 			$this->nick = $nick;
@@ -163,9 +167,10 @@
 		public function command_say($user, $channel, $args) {
 			$echo = implode(" ",$args);
 			$this->bot->say_message($channel, $echo);
-		}
+		} 
 		public function command_hug($user, $channel, $args) {
-			$this->bot->say_message($channel, "\u0001Hugs ".$args[0]."\u0001");
+			$ACTION = chr(1);
+			$this->bot->say_message($channel, $ACTION."ACTION Hugs ".$args[0]." ".$ACTION);
 		}
 		public function command_calc($user, $channel, $args) {
 			$calc = implode(" ",$args);
@@ -184,7 +189,8 @@
 			
 			
 			foreach($rssarray as $rss) {
-				$msg = $msg.$rss['title'].' || ';
+				$char = chr(2);
+				$msg = $msg.$rss['title']." ".$char.'||'.$char." ";
 			}
 			$this->bot->say_message($channel, $msg);
 			
@@ -203,7 +209,23 @@
 		public function command_countdown($user, $channel, $args) {
 			require_once("countdown.php");
 			$this->bot->say_message($channel, countdown($args[4], $args[3], $args[2], $args[1], $args[0]));
-		}	
+		}
+		public function command_playerlist($user, $channel, $args) {
+			require_once("/plugins/Minecraft/Minequery.php");
+			$array = Minequery::query("MCSteamed.net", $port = 25566, $timeout = 30);
+			$char = chr(2);
+			$msg = implode($char." || ".$char, $array["playerList"]);
+			$this->bot->say_message($channel, $msg);
+		}
+		public function command_online($user, $channel, $args) {
+			require_once("/plugins/Minecraft/Minequery.php");
+			$array = Minequery::query("MCSteamed.net", $port = 25566, $timeout = 30);
+			$char = chr(3);
+			$onlineplayers = $array['playerCount'];
+			$maxplayers = $array['maxPlayers'];
+			$maxplayers = preg_replace("/Char/", '', $maxplayers);
+			$this->bot->say_message($channel, "There are currently".$char."21 ".$onlineplayers."".$char." of".$char."21 ".$maxplayers."".$char." players on MCsteamed right now.");
+		}
 	}
 	class sinz_reload {
 		private $bot = null;
