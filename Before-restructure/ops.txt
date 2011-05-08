@@ -1,0 +1,5 @@
+<user>
+<id>SinZ!~SinZ@mca.uk.to</id>
+<network>irc.esper.net</network>
+<channel>#Minebot</channel>
+</user>
