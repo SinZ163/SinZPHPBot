@@ -161,7 +161,8 @@ class command {
 		require_once("/plugins/sinz/rss/plugin.php");
 		$rssarray = SinZ_RSS($args[0], $channel);
 		foreach($rssarray as $rss) {
-			$msg = $msg.$rss['title'].' || ';
+			$chr = chr(2);
+			$msg = $msg.$rss['title']."".$char.'||'.$chr;
 		}
 		$this->bot->say_message($channel, $msg);
 		
@@ -192,7 +193,7 @@ class minecraft_commands {
 		$this->bot = $bot;
 	}
 	public function command_playerlist($user, $channel, $args) {
-		require_once("/plugins/Minecraft/Minequery.php");
+		require_once("/plugins/sinz/Minecraft/Minequery.php");
 		if ($args[0] == "") {
 			$url = "MCSteamed.net";
 		}
@@ -207,7 +208,7 @@ class minecraft_commands {
 		$this->bot->say_message($channel, $msg);
 	}
 	public function command_online($user, $channel, $args) {
-		require_once("/plugins/Minecraft/Minequery.php");
+		require_once("/plugins/sinz/Minecraft/Minequery.php");
 		if ($args[0] == "") {
 			$url = "MCSteamed.net";
 		}

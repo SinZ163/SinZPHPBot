@@ -1,14 +1,15 @@
 <?php
-/*
+/* Config for SinZBot!
  *
  */
 
-$config['network'] = 'irc.esper.net';
-$config['port']    = 3306;
+$config['network'] = 'irc.axxim.net';
+$config['port']    = '6667';
 $config['ssl']     = false; // NOT READY YET
 $config['nick']    = 'cloneBot';
-$config['ident']   = 'cloneBot';
+$config['ident']   = 'SinZBot';
 $config['realname']= 'cloneBot';
+$config['command'] = '`';
 
 $config['channels']= array('#bottest', '#sinzbot');
 $config['admins']  = array('SinZ','clone1018');
