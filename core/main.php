@@ -181,11 +181,11 @@ class command {
 		require_once("countdown.php");
 		$this->bot->say_message($channel, countdown($args[4], $args[3], $args[2], $args[1], $args[0]));
 	}
-	public function command_reload($user, $channels, $args) {
+/*	  public function command_reload($user, $channels, $args) {
 		if($this->user->isAdmin($args[0])) {
 			// Figure out how to reload	
 		}
-	}
+	} */
 }
 class minecraft_commands {
 	private $bot = null;

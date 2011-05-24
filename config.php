@@ -3,16 +3,16 @@
  *
  */
 
-$config['network'] = 'irc.axxim.net';
+$config['network'] = 'irc.synirc.net';
 $config['port']    = '6667';
 $config['ssl']     = false; // NOT READY YET
-$config['nick']    = 'cloneBot';
+$config['nick']    = 'MCABot`';
 $config['ident']   = 'SinZBot';
 $config['realname']= 'cloneBot';
 $config['command'] = '`';
 
 $config['channels']= array('#bottest', '#sinzbot');
-$config['admins']  = array('SinZ','clone1018');
+$config['admins']  = array('SinZ', 'clone1018');
 						
 
 /* Nick Server */

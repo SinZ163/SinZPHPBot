@@ -11,12 +11,71 @@ class bot {
         $this->realname = $realname;
         $this->startchan = $startchannels;
     }
-
+    public function config($group, $section) {
+        $config = parse_ini_file("config.txt", true);
+        $config[server] = $host;
+        $config[bot_details] = $botdetails;
+        $config[NickServ] = $NickServ; 
+        $config[CTCP] = $CTCP;
+        $config[Channels] = $channels;
+        $config[Admins] = $admins;
+        $admin = explode(",", $admins);
+        if ($group == "host") {
+            if ($section == "server") {
+                $result = $host[server];
+            }
+            elseif ($section == "port") {
+                $result = $host[port];
+            }
+            elseif ($section == "ssl") {
+                $result = $host[ssl];
+            }
+        }
+        elseif ($group == "botdetails") {
+            if ($section == "nick") {
+                $result = $botdetails[nick];
+            }
+            elseif ($section == "ident") {
+                $result = $botdetails[ident];
+            }
+            elseif ($section == "realname") {
+                $result = $botdetails[realname];
+            }
+        }
+        elseif ($group == "NickServ") {
+            if ($section == "user") {
+                $result = $NickServ[user];
+            }
+            elseif ($section == "pass") {
+                $result = $NickServ[pass];
+            }
+            elseif ($section == "sla") {
+                $result = $NickServ[sla];
+            }
+        }
+        elseif ($group == "CTCP") {
+            if ($section == "ping") {
+                $result = $CTCP[ping];
+            }
+            elseif ($section == "version") {
+                $result = $ctcp[version];
+            }
+        }
+        return $result;
+    }
     private $modules = array();
 
     public function plugin_register($class) {
         $this->modules[] = $class;
         $class->plugin_registered($this);
+    }
+    public function isAdmin($server, $channel, $user) {
+        $admins = config(admins);
+	foreach($admins as $admin) {
+	    if ($user == $admin) {
+	        return true;
+	    }
+	}
     }
 
     public function plugin_event($name) {
@@ -64,14 +123,18 @@ class bot {
     private $sock = null;
 
     public function connect() {
-        $this->sock = fsockopen($this->server, $this->port, $errno, $errstr, 32767);
+        $this->sock = fsockopen($this->server, $this->port, $errno, $errstr, 32768);
+        stream_set_timeout($this->sock, 2);
+        $errorlevel = stream_get_meta_data($this->sock);
 
         $this->send_message("", "NICK", $this->nick);
         $this->send_message("", "USER", $this->user, "8", "*", $this->realname);
-		$channels = $this->startchan;
-		foreach ($channels as $chan) {
-			$this->send_message("", "JOIN", $chan);
-		}
+	foreach ($this->startchan as $chan) {
+		$this->send_message("", "JOIN", $chan);
+	}
+        if ($errorinfo['timed_out']) {
+            echo 'Connection timed out!';
+        }
         //$this->send_message("","PRIVMSG", "#bottest", "FUCK YOU!");
     }
 
@@ -114,7 +177,7 @@ class bot {
         if (!$this->sock) {
             $this->connect();
         }
-        while ($line = fgets($this->sock)) {
+        while(!feof($this->sock)) { $line = fgets($this->sock);
             list($prefix, $command, $args) = $this->parse_message($line);
             //echo "prefix: {$prefix}, args: ",json_encode($args),"\n";
             echo json_encode(array($prefix, $command, $args)), "\n";
