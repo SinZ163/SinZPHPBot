@@ -44,7 +44,7 @@ class command {
 		$this->bot->say_message($channel, json_encode(array($data[error], $data[icc], $calc)));
 	}
 	public function command_rss($user, $channel, $args) {
-		require_once("/plugins/sinz/rss/plugin.php");
+		require_once("/plugins/rss/plugin.php");
 		$rssarray = SinZ_RSS($args[0], $channel);
 		foreach($rssarray as $rss) {
 			$msg = $msg.$rss['title'].' || ';
@@ -67,45 +67,6 @@ class command {
 		require_once("countdown.php");
 		$this->bot->say_message($channel, countdown($args[4], $args[3], $args[2], $args[1], $args[0]));
 	}
-		public function command_playerlist($user, $channel, $args) {
-		require_once("/plugins/sinz/Minecraft/Minequery.php");
-		if ($args[0] == "") {
-			$url = "MCSteamed.net";
-		}
-		else $url = $args[0];
-		if ($args[1] == "") {
-			$port = 25566;
-		}
-		else $port = $args[1];
-		$array = Minequery::query($url, $port, $timeout = 30);
-		$char = chr(2);
-		$msg = implode($char." || ".$char, $array["playerList"]);
-		$this->bot->say_message($channel, $msg);
-	}
-	public function command_online($user, $channel, $args) {
-		require_once("/plugins/sinz/Minecraft/Minequery.php");
-		if ($args[0] == "") {
-			$url = "MCSteamed.net";
-		}
-		else $url = $args[0];
-		if ($args[1] == "") {
-			$port = 25566;
-		}
-		else $port = $args[1];
-		$array = Minequery::query($url, $port, $timeout = 30);
-		$char = chr(3);
-		$onlineplayers = $array['playerCount'];
-		$maxplayers = $array['maxPlayers'];
-		$maxplayers = preg_replace("/Char/", '', $maxplayers);
-		$this->bot->say_message($channel, "There are currently".$char."21 ".$onlineplayers."".$char." of".$char."21 ".$maxplayers."".$char." players on ".$url." right now.");
-	}
-	public function command_paid($user, $channel, $args) {
-		$url = file("http://www.minecraft.net/haspaid.jsp?user=".urlencode($args[0]));
-		echo ("|".$url[3]."|");
-		$this->bot->say_message($channel, $args[0]."'s paid status for Minecraft is: ".$url[3]);
-		if ($url[3] == "false") { $this->bot->say_message($channel, $args[0]." hasn't paid for Minecraft!, That bastard!"); }
-		elseif ($url[3] == "turn") { $this->bot->say_message($channel, $args[0]." hasn paid for Minecraft!, I r give him hugz later!"); }
-	}
 	public function command_port($user, $channel, $args) {
 		$fp = fsockopen($args[0],$args[1],$errno,$errstr,10);
 		if(!$fp) { $msg = "Cannot connect to server"; }
@@ -116,8 +77,19 @@ class command {
 		$this->bot->say_message($channel, $msg);
 	}
 	public function command_google($user, $channel, $args) {
-		require_once("/plugins/sinz/google_search/plugin.php");
+		require_once("/plugins/google_search/plugin.php");
 		$this->bot->say_message($channel, sinz_google_search($args));
+	}
+    public function command_pastebin($user, $channel, $args) {
+            require_once("/plugins/pastebin/plugin.php");
+            $this->bot->say_message($channel, sinz_pastebin($args));
+    }
+    public function command_addplugin($user, $channel, $args) {
+            include_once $args[0];
+            $this->bot->plugin_register(new $args[1]());
+    }
+	public function command_trollface($user, $channel, $args) {
+			$this->bot->say_message($channel, "http://www.ciscolife.ca/trollface.png");
 	}
 	/*public function command_reload($user, $channels, $args) {
 		if($this->user->isAdmin($args[0])) {

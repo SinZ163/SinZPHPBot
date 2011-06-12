@@ -3,7 +3,7 @@
  *
  */
 
-$config['network'] = 'irc.synirc.net';
+$config['network'] = 'irc.esper.net';
 $config['port']    = '6667';
 $config['ssl']     = false; // NOT READY YET
 $config['nick']    = 'MCABot`';

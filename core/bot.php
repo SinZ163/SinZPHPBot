@@ -185,6 +185,5 @@ class bot {
             $this->flush_message();
         }
     }
-
 }
 
