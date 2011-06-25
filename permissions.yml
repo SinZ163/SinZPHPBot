@@ -1,0 +1,24 @@
+users:
+    SinZ:
+        group: 'Owner'
+        nick: 
+            - 'SinZ'
+        ident: 
+            - 'SinZ'
+        hostmark: 
+            - b8.d3s.co
+            - 'mca.uk.to'
+        password: 'herpderp'
+        add-hostmark-by-login: true
+        add-nick-by-login: true
+        add-ident-by-login: true
+groups:
+    default:
+        permissions:
+            - 'plugin.minecraft.paid'
+            - 'plugin.minecraft.online'
+            - 'plugin.minecraft.playerlist'
+            - 'core.command.debug'
+    Owner:
+        permissions:
+            - '*'

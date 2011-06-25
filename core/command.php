@@ -5,28 +5,48 @@ class command {
 		$this->bot = $bot;
 	}
 	public function command_debug($user, $channel, $args) {
-		$this->bot->say_message($channel, json_encode(array($user, $channel, $args)));
-	}
-	public function command_rickroll($user, $channel, $args) {
-		if ($this->bot->isadmin($args[0]) == true) {
-			$this->bot->say_message($channel, "Dont rickroll my master, BITCH");
+		if (!(user::IPhasPermission("core.command.debug", $user))) {
+			$this->bot->say_notice($user, "You dont have permission to use this command.");
 		}
 		else {
-			$this->bot->say_message($args[0], "Never going to Give you up, Never going to Let you down, never going to run android and, desert you!");
-			$this->bot->say_message($channel, $args[0]." Just got rickrolled!");
+			$this->bot->say_message($channel, json_encode(array($user, $channel, $args)));
+		}
+	}
+	public function command_rickroll($user, $channel, $args) {
+		if (!(user::IPhasPermission("core.command.rickroll", $user))) {
+			$this->bot->say_notice($user, "You dont have permission to use this command.");
+		}
+		else {
+			if (!(user::IPhasPermission("core.command.rickroll.admin", $args[0]))) {
+				if (!(user::IPhasPermission("core.command.rickroll.admin", $user))) {
+					$this->bot->say_notice($user, "You dont have permission to rickroll my master, bitch!!!");
+				}
+				else {
+					$this->bot->say_message($args[0], "Never going to Give you up, Never going to Let you down, never going to run android and, desert you!");
+					$this->bot->say_message($channel, $args[0]." Just got rickrolled!");
+				}
+			}
+			else {
+				$this->bot->say_message($args[0], "Never going to Give you up, Never going to Let you down, never going to run android and, desert you!");
+				$this->bot->say_message($channel, $args[0]." Just got rickrolled!");
+			}
 		}
 	}
 	public function command_join($user, $channel, $args) {
-		$this->bot->send_message("","JOIN", $args[0]);
+		if (!(user::IPhasPermission("core.command.join", $user))) {
+			$this->bot->say_notice($user, "You dont have permission to use this command.");
+		}
+		else {
+			$this->bot->send_message("","JOIN", $args[0]);
+		}
 	}
 	public function command_part($user, $channel, $args) {
-		$this->bot->send_message("","PART", $args[0]);
-	}
-	public function command_op($user, $channel, $args) {
-		$this->bot->send_message("","MODE +o", $args[0]);
-	}
-	public function command_voice($user, $channel, $args) {
-		$this->bot->send_message("","MODE +v", $args[0]);
+		if (!(user::IPhasPermission("core.command.join", $user))) {
+			$this->bot->say_notice($user, "You dont have permission to use this command.");
+		}
+		else {
+			$this->bot->send_message("","PART", $args[0]);
+		}
 	}
 	public function command_say($user, $channel, $args) {
 		$echo = implode(" ",$args);
@@ -42,15 +62,6 @@ class command {
 		//foreach ($data as &$node) { $node = html_entity_decode($node); }
 		$this->bot->say_message($channel, $data["lhs"]." = ".$data["rhs"]);	
 		$this->bot->say_message($channel, json_encode(array($data[error], $data[icc], $calc)));
-	}
-	public function command_rss($user, $channel, $args) {
-		require_once("/plugins/rss/plugin.php");
-		$rssarray = SinZ_RSS($args[0], $channel);
-		foreach($rssarray as $rss) {
-			$msg = $msg.$rss['title'].' || ';
-		}
-		$this->bot->say_message($channel, $msg);
-		
 	}
 	public function command_title($user, $channel, $args) {
 		$url = $args[0];
@@ -91,8 +102,41 @@ class command {
 	public function command_trollface($user, $channel, $args) {
 			$this->bot->say_message($channel, "http://www.ciscolife.ca/trollface.png");
 	}
+	public function command_andromeda($user, $channel, $args) {
+		if ($args[0] == "console") {
+			$arg = implode(" ", $args);
+			$msg = substr($arg, 8);
+			$command = urlencode($msg);
+			// Now we have found EXACTLY what we want to send as the command, lets first login.
+			$user = "SinZ";
+			$pass = "$!NN3d**";
+			$user_agent = "Mozilla/5.0 (compatible; MSIE 5.01; Windows NT 5.0)";
+			$ch = curl_init();
+			curl_setopt($ch, CURLOPT_URL, "http://manage.pigsaddle.com/login.php");
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+			curl_setopt($ch, CURLOPT_POST, true);
+			curl_setopt($ch, CURLOPT_USERAGENT, $user_agent);
+			curl_setopt($ch, CURLOPT_POSTFIELDS, "?username=".$user."&password=".$pass);
+			$login_output = curl_exec($ch);
+			$login_info = curl_getinfo($ch);
+			// Hopefully we have logged in now... we can actually "hack" into the console
+			curl_setopt($ch, CURLOPT_URL, "http://manage.pigsaddle.com/include/actions/ssh_command.php");
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+
+			$data = array(
+			'command' => 'say',
+			'text' => $command
+			);
+
+			curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+			$output = curl_exec($ch);
+			$info = curl_getinfo($ch);
+			curl_close($ch);
+			$this->bot->say_message($channel, $login_output." ".$login_info." ".$output." ".$info." Done");
+		}
+	}
 	/*public function command_reload($user, $channels, $args) {
-		if($this->user->isAdmin($args[0])) {
+		if(user::isAdmin($args[0])) {
 			// Figure out how to reload	
 		}
 	}*/

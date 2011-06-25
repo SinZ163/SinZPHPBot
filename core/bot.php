@@ -69,15 +69,6 @@ class bot {
         $this->modules[] = $class;
         $class->plugin_registered($this);
     }
-    public function isAdmin($server, $channel, $user) {
-        $admins = config(admins);
-	foreach($admins as $admin) {
-	    if ($user == $admin) {
-	        return true;
-	    }
-	}
-    }
-
     public function plugin_event($name) {
         $name = strtolower($name);
 

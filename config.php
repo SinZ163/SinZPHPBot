@@ -6,7 +6,7 @@
 $config['network'] = 'irc.esper.net';
 $config['port']    = '6667';
 $config['ssl']     = false; // NOT READY YET
-$config['nick']    = 'MCABot`';
+$config['nick']    = 'MCABot';
 $config['ident']   = 'SinZBot';
 $config['realname']= 'cloneBot';
 $config['command'] = '`';
