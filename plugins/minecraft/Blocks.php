@@ -67,7 +67,7 @@ class Blocks {
 		$ID_63 = array("Sign");
 		$ID_64 = array("Door", "WoodenDoor", "WoodDoor");
 		$ID_65 = array("Ladder");
-		$ID_66 = array("Rail", "Rails", "Railway", "Track", "MinecartTrack", "CartTrack", "CartRail", "MinecartRail", "CartRails, "MinecartRails");
+		$ID_66 = array("Rail", "Rails", "Railway", "Track", "MinecartTrack", "CartTrack", "CartRail", "MinecartRail", "CartRails", "MinecartRails");
 		$ID_67 = array("CobblestoneStairs", "StoneStairs", "Stairs");
 		$ID_68 = array("Sign", "WallSign");
 		$ID_69 = array("Lever", "Switch");
