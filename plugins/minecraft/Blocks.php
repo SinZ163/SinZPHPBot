@@ -6,7 +6,7 @@ class Blocks {
 		$ID_02 = array("Grass", "Earth");
 		$ID_03 = array("Dirt", "Earth");
 		$ID_04 = array("Cobblestone", "Cobble");
-		$ID_05 = array("WoodenPlank, "Wood", "Plank");
+		$ID_05 = array("WoodenPlank", "Wood", "Plank");
 		$ID_06 = array("Sapling");
 		$ID_07 = array("Bedrock", "Adminium");
 		$ID_08 = array("Water");
