@@ -28,12 +28,12 @@ class Blocks {
 		$ID_24 = array("Sandstone");
 		$ID_25 = array("NoteBlock", "MusicBlock");
 		$ID_26 = array("Bed");
-		$ID_27 = array();
-		$ID_28 = array();
+		$ID_27 = array("PoweredRail");
+		$ID_28 = array("DetectorRail", "PressureRail");
 		$ID_29 = array();
-		$ID_30 = array();
-		$ID_31 = array();
-		$ID_32 = array();
+		$ID_30 = array("Web", "Cobweb");
+		$ID_31 = array("TallGrass", "WildGrass", "Shrubs");
+		$ID_32 = array("DeadShrubs", "DesertShrubs");
 		$ID_33 = array();
 		$ID_34 = array();
 		$ID_35 = array("Wool", "Cloth");
@@ -96,8 +96,8 @@ class Blocks {
 		$ID_92 = array("Cake");
 		$ID_93 = array("RedstoneRepeater");
 		$ID_94 = array("RedstoneRepeater", "RedstoneRepeaterOn");
-		$ID_95 = array();
-		$ID_96 = array();
+		$ID_95 = array("LockedChest", "SteveCoSupplyCrate", "SteveCo.SupplyCrate", "AprilFoolsChest", "SteveCoChest", SteveCo.Chest");
+		$ID_96 = array("Trapdoor");
 		array_push($DB, $ID_01, $ID_02, $ID_03, $ID_04, $ID_05, $ID_06, $ID_07, $ID_08, $ID_09, $ID_10,
 						$ID_11, $ID_12, $ID_13, $ID_14, $ID_15, $ID_16, $ID_17, $ID_18, $ID_19, $ID_20,
 						$ID_21, $ID_22, $ID_23, $ID_24, $ID_25, $ID_26, $ID_27, $ID_28, $ID_29, $ID_30,
