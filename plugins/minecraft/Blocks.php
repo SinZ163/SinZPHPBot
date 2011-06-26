@@ -92,7 +92,7 @@ class Blocks {
 		$ID_88 = array("SoulSand", "Quicksand", "Nethersand");
 		$ID_89 = array("Glowstone", "GlowstoneBlock");
 		$ID_90 = array("Portal", "NetherPortal");
-		$ID_91 = array("JackOLantern", "GlowingPumpkin", "Pumpkin", "Jack'O'Lantern);
+		$ID_91 = array("JackOLantern", "GlowingPumpkin", "Pumpkin", "Jack'O'Lantern");
 		$ID_92 = array("Cake");
 		$ID_93 = array("RedstoneRepeater");
 		$ID_94 = array("RedstoneRepeater", "RedstoneRepeaterOn");
