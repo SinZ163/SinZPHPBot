@@ -9,7 +9,7 @@ class bot {
         $this->nick = $nick;
         $this->user = $user;
         $this->realname = $realname;
-        $this->startchan = $startchannels;
+        $this->startchan = $channels;
     }
     public function config($group, $section) {
         $config = parse_ini_file("config.txt", true);
@@ -120,9 +120,15 @@ class bot {
 
         $this->send_message("", "NICK", $this->nick);
         $this->send_message("", "USER", $this->user, "8", "*", $this->realname);
-	foreach ($this->startchan as $chan) {
-		$this->send_message("", "JOIN", $chan);
-	}
+		$i = 1;
+		while ($i <= 100) {
+			$i++;
+			if ($i == 100) {
+				foreach ($this->startchan as $chan) {
+				$this->send_message("", "JOIN", $chan);
+				}
+			}
+		}
         if ($errorinfo['timed_out']) {
             echo 'Connection timed out!';
         }
@@ -176,5 +182,9 @@ class bot {
             $this->flush_message();
         }
     }
+	public function __autoload($class) {
+		include "plugins/".$class.'/plugin.php';
+		$this->plugin_register(new $class());	
+	}
 }
 

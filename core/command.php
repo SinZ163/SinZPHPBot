@@ -135,6 +135,12 @@ class command {
 			$this->bot->say_message($channel, $login_output." ".$login_info." ".$output." ".$info." Done");
 		}
 	}
+	public function command_id($user, $channel, $args) {
+		require_once("/plugins/Minecraft/Blocks.php");
+		$result = Blocks::GetID($args[0]);
+		echo $result;
+		$this->bot->say_message($channel, "The ID for ".$args[0]." is ".$result.".");
+	}
 	/*public function command_reload($user, $channels, $args) {
 		if(user::isAdmin($args[0])) {
 			// Figure out how to reload	

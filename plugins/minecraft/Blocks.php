@@ -1,6 +1,22 @@
 <?php
 class Blocks {
-	public function getID($name) {
+	public function getID($block_name) {
+		$DB = array(
+		 1 => array("Stone", "Rock"),
+		 2 => 'Grass',
+		 3 => array("Dirt", "Earth"),
+		 4 => array("Cobblestone", "Cobble"),
+		 5 => array("WoodenPlank", "Wood", "Plank"),
+		 6 => 'Sapling',
+		 7 => array("Bedrock", "Adminium", "Solid"),
+		 8 => 'Water',
+		 9 => 'StationaryWater',
+		10 => 'Lava',
+		96 => 'TrapDoor', 'Hatch');
+		$result = array_search($block_name, $DB);
+		echo $result;
+		return $result;
+	/*
 		$DB = array();
 		$ID_01 = array("Stone", "Rock");
 		$ID_02 = array("Grass", "Earth");
@@ -96,8 +112,8 @@ class Blocks {
 		$ID_92 = array("Cake");
 		$ID_93 = array("RedstoneRepeater");
 		$ID_94 = array("RedstoneRepeater", "RedstoneRepeaterOn");
-		$ID_95 = array("LockedChest", "SteveCoSupplyCrate", "SteveCo.SupplyCrate", "AprilFoolsChest", "SteveCoChest", SteveCo.Chest");
-		$ID_96 = array("Trapdoor");
+		$ID_95 = array("LockedChest", "SteveCoSupplyCrate", "SteveCo.SupplyCrate", "AprilFoolsChest", "SteveCoChest", "SteveCo.Chest");
+		$ID_96 = array("96", array("Trapdoor", "Hatch"));
 		array_push($DB, $ID_01, $ID_02, $ID_03, $ID_04, $ID_05, $ID_06, $ID_07, $ID_08, $ID_09, $ID_10,
 						$ID_11, $ID_12, $ID_13, $ID_14, $ID_15, $ID_16, $ID_17, $ID_18, $ID_19, $ID_20,
 						$ID_21, $ID_22, $ID_23, $ID_24, $ID_25, $ID_26, $ID_27, $ID_28, $ID_29, $ID_30,
@@ -107,11 +123,18 @@ class Blocks {
 						$ID_61, $ID_62, $ID_63, $ID_64, $ID_65, $ID_66, $ID_67, $ID_68, $ID_69, $ID_70,
 						$ID_71, $ID_72, $ID_73, $ID_74, $ID_75, $ID_76, $ID_77, $ID_78, $ID_79, $ID_80,
 						$ID_81, $ID_82, $ID_83, $ID_84, $ID_85, $ID_86, $ID_87, $ID_88, $ID_89, $ID_90,
-						$ID_91, $ID_92, $ID_93, $ID_94, $ID_95, $ID_96, 
-						$ID_256, $ID_257, $ID_258, $ID_259, $ID_260, 
-						$ID_261, $ID_262, $ID_263, $ID_264, $ID_265, $ID_266, $ID_267, $ID_268, $ID_269, $ID_270,
-						$ID_271, $ID_272, $ID_273, $ID_274, $ID_275, $ID_276, $ID_277, $ID_278, $ID_279, $ID_280,
-						
-		}
+						$ID_91, $ID_92, $ID_93, $ID_94, $ID_95, $ID_96);
+		foreach ($DB as $ID) {
+			echo "|".$id;
+			foreach ($ID as $name_array) {
+				echo "~".$name_array;
+				foreach ($name_array as $name) {
+					if ($name == $block_name) {
+						echo $block_name;
+						return $ID;
+					}
+				}
+			}
+		} */
 	}
 }

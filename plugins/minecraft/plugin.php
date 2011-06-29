@@ -58,5 +58,11 @@ class minecraft {
 			$this->bot->say_message($channel, $msg);
 		}
 	}
+	public function command_id($user, $channel, $args) {
+		require_once("/plugins/Minecraft/Blocks.php");
+		$result = Blocks::GetID($args[0]);
+		echo $result;
+		$this->bot->say_message($channel, "The ID for ".$args[0]." is ".$result.".");
+	}
 }
 ?>
