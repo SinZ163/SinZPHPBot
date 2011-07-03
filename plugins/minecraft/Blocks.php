@@ -146,6 +146,7 @@ class Blocks {
             }
             foreach ($array as $subarray)
                 $results = array_merge($results, Blocks::search_array_by_value($subarray, $value));
+				echo $results;
         }
         return $results;
     }

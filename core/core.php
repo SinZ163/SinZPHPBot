@@ -1,8 +1,17 @@
 <?php
 class core {
 	private $bot = null;
+	public function core($channels) {
+		$this->channels = $channels;
+	}
 	public function plugin_registered($bot) {
 		$this->bot = $bot;
+	}
+	public function network_376($prefix, $command, $args) {
+		
+		foreach ($this->channels as $chan) {
+			$this->bot->send_message("", "JOIN", $chan);
+		}
 	}
 	public function network_ping($prefix, $command, $args) {
 		$this->bot->send_message("","PONG", $args[0]);

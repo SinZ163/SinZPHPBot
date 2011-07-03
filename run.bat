@@ -1,3 +1,3 @@
 @echo off
-"php/php.exe" "bot.php"
+"php/php.exe" "run.php"
 pause

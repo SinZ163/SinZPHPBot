@@ -13,7 +13,7 @@ $command = new command();
 $user = new user();
 
 $bot = new bot($config['network'],$config['port'],$config['nick'],$config['ident'],$config['realname'],$config['channels']); //start bot and use defaults.
-$bot->plugin_register(new core());
+$bot->plugin_register(new core($config['channels']));
 $bot->plugin_register(new command());
 $bot->plugin_register(new user());
 $bot->plugin_register(new CTCP());

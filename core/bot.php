@@ -121,9 +121,10 @@ class bot {
         $this->send_message("", "NICK", $this->nick);
         $this->send_message("", "USER", $this->user, "8", "*", $this->realname);
 		$i = 1;
-		while ($i <= 100) {
+		$s = 9999999;
+		while ($i != $s) {
 			$i++;
-			if ($i == 100) {
+			if ($i == 9999998) {
 				foreach ($this->startchan as $chan) {
 				$this->send_message("", "JOIN", $chan);
 				}
