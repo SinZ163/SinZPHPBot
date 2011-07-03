@@ -120,16 +120,6 @@ class bot {
 
         $this->send_message("", "NICK", $this->nick);
         $this->send_message("", "USER", $this->user, "8", "*", $this->realname);
-		$i = 1;
-		$s = 9999999;
-		while ($i != $s) {
-			$i++;
-			if ($i == 9999998) {
-				foreach ($this->startchan as $chan) {
-				$this->send_message("", "JOIN", $chan);
-				}
-			}
-		}
         if ($errorinfo['timed_out']) {
             echo 'Connection timed out!';
         }

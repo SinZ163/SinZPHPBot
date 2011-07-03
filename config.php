@@ -11,7 +11,7 @@ $config['ident']   = 'SinZBot';
 $config['realname']= 'cloneBot';
 $config['command'] = '`';
 
-$config['channels']= array('#bottest', '#sinzbot');
+$config['channels']= array('#sinzbot');
 $config['admins']  = array('SinZ', 'clone1018');
 						
 
