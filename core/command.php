@@ -137,9 +137,15 @@ class command {
 	}
 	public function command_id($user, $channel, $args) {
 		require_once("/plugins/Minecraft/Blocks.php");
-		$result = Blocks::GetID($args[0]);
+		if ($args[1]) {
+			$block = implode('', $args);
+		}
+		else {
+			$block = $args[0];
+		}
+		$result = Blocks::GetID($block);
 		echo $result;
-		$this->bot->say_message($channel, "The ID for ".$args[0]." is ".$result.".");
+		$this->bot->say_message($channel, "The ID for ".$block." is ".$result.".");
 	}
 	/*public function command_reload($user, $channels, $args) {
 		if(user::isAdmin($args[0])) {

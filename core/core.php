@@ -1,17 +1,22 @@
 <?php
 class core {
 	private $bot = null;
-	public function core($channels) {
-		$this->channels = $channels;
+	public function core($config) {
+		$this->config = $config;
 	}
 	public function plugin_registered($bot) {
 		$this->bot = $bot;
 	}
 	public function network_376($prefix, $command, $args) {
 		
-		foreach ($this->channels as $chan) {
+		foreach ($this->config['channels'] as $chan) {
 			$this->bot->send_message("", "JOIN", $chan);
 		}
+		//if ($config['ns_enabled']) {
+		$ns_msg = "IDENTIFY ".$this->config['ns_nick'].' '.$this->config['ns_pass'];
+		echo $ns_msg;
+		$this->bot->say_message("NickServ", $ns_msg);
+		//}
 	}
 	public function network_ping($prefix, $command, $args) {
 		$this->bot->send_message("","PONG", $args[0]);

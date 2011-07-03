@@ -16,8 +16,9 @@ $config['admins']  = array('SinZ', 'clone1018');
 						
 
 /* Nick Server */
-$config['ns_user'] = 'cloneBot';
-$config['ns_pass'] = 'test';
+//$config['ns_enabled'] = true;
+$config['ns_nick'] = 'MCABot';
+$config['ns_pass'] = 'qwertyuiop';
 $config['ns_sla'] = false;  // Whatever that shit is called.
 
 /* CTCP */

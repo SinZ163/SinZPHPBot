@@ -2,14 +2,13 @@
 class bot {
     
 
-    public function bot($server, $port, $nick, $user, $realname, $channels) {
+    public function bot($server, $port, $nick, $user, $realname) {
 
         $this->server = $server;
         $this->port = $port;
         $this->nick = $nick;
         $this->user = $user;
         $this->realname = $realname;
-        $this->startchan = $channels;
     }
     public function config($group, $section) {
         $config = parse_ini_file("config.txt", true);
