@@ -12,10 +12,11 @@ class Blocks {
 		 8 => 'Water',
 		 9 => 'StationaryWater',
 		10 => 'Lava',
-		96 => 'TrapDoor', 'Hatch');
-		$result = array_search($block_name, $DB);
-		echo $result;
-		return $result;
+		96 => array('TrapDoor', 'Hatch'));
+		$result = Blocks::search_array_by_value($DB, $block_name);
+		echo $result[0];
+		return $result[0];
+	}
 	/*
 		$DB = array();
 		$ID_01 = array("Stone", "Rock");
@@ -136,5 +137,16 @@ class Blocks {
 				}
 			}
 		} */
-	}
+	public function search_array_by_value($array, $value) {
+        $results = array();
+        if (is_array($array)) {
+            $found = array_search($value,$array);
+            if ($found) {
+                $results[] = $found;
+            }
+            foreach ($array as $subarray)
+                $results = array_merge($results, Blocks::search_array_by_value($subarray, $value));
+        }
+        return $results;
+    }
 }
