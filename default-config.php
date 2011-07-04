@@ -6,6 +6,11 @@
 * Please change the name of this file from default-config.php to config.php
 * 
 */
+$config['plugins'] = array(
+    'plugin1',
+    'plugin2',
+    'plugin3'
+);
 
 $config['network'] = 'irc.network.tld';
 $config['port']    = '6667';
