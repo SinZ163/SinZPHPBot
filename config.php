@@ -6,6 +6,11 @@
 * Please change the name of this file from default-config.php to config.php
 * 
 */
+$config['plugins'] = array(
+    'channel_commands',
+    'minecraft',
+    'google'
+);
 
 $config['network'] = 'irc.esper.net';
 $config['port']    = '6667';

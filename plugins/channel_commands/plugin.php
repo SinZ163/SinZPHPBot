@@ -2,7 +2,7 @@
 class channel_commands {
     private $bot = null;
     public function plugin_registered($bot) {
-	$this->bot = $bot;
+        $this->bot = $bot;
     }
     public function command_op($user, $channel, $args) {
         $this->bot->send_message("", "MODE ".$channel." +o ".$args[0]);

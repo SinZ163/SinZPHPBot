@@ -1,6 +1,6 @@
 <?php
+
 class bot {
-    
 
     public function bot($server, $port, $nick, $user, $realname) {
 
@@ -10,64 +10,14 @@ class bot {
         $this->user = $user;
         $this->realname = $realname;
     }
-    public function config($group, $section) {
-        $config = parse_ini_file("config.txt", true);
-        $config[server] = $host;
-        $config[bot_details] = $botdetails;
-        $config[NickServ] = $NickServ; 
-        $config[CTCP] = $CTCP;
-        $config[Channels] = $channels;
-        $config[Admins] = $admins;
-        $admin = explode(",", $admins);
-        if ($group == "host") {
-            if ($section == "server") {
-                $result = $host[server];
-            }
-            elseif ($section == "port") {
-                $result = $host[port];
-            }
-            elseif ($section == "ssl") {
-                $result = $host[ssl];
-            }
-        }
-        elseif ($group == "botdetails") {
-            if ($section == "nick") {
-                $result = $botdetails[nick];
-            }
-            elseif ($section == "ident") {
-                $result = $botdetails[ident];
-            }
-            elseif ($section == "realname") {
-                $result = $botdetails[realname];
-            }
-        }
-        elseif ($group == "NickServ") {
-            if ($section == "user") {
-                $result = $NickServ[user];
-            }
-            elseif ($section == "pass") {
-                $result = $NickServ[pass];
-            }
-            elseif ($section == "sla") {
-                $result = $NickServ[sla];
-            }
-        }
-        elseif ($group == "CTCP") {
-            if ($section == "ping") {
-                $result = $CTCP[ping];
-            }
-            elseif ($section == "version") {
-                $result = $ctcp[version];
-            }
-        }
-        return $result;
-    }
+
     private $modules = array();
 
     public function plugin_register($class) {
         $this->modules[] = $class;
         $class->plugin_registered($this);
     }
+
     public function plugin_event($name) {
         $name = strtolower($name);
 
@@ -164,7 +114,8 @@ class bot {
         if (!$this->sock) {
             $this->connect();
         }
-        while(!feof($this->sock)) { $line = fgets($this->sock);
+        while (!feof($this->sock)) {
+            $line = fgets($this->sock);
             list($prefix, $command, $args) = $this->parse_message($line);
             //echo "prefix: {$prefix}, args: ",json_encode($args),"\n";
             echo json_encode(array($prefix, $command, $args)), "\n";
@@ -172,9 +123,11 @@ class bot {
             $this->flush_message();
         }
     }
-	public function __autoload($class) {
-		include "plugins/".$class.'/plugin.php';
-		$this->plugin_register(new $class());	
-	}
+
+    public function __autoload($class) {
+        include "plugins/" . $class . '/plugin.php';
+        $this->plugin_register(new $class());
+    }
+
 }
 

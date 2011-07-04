@@ -1,6 +1,10 @@
 <?php
 class command {
 	private $bot = null;
+    public function command($config) {
+        $this->config = $config;
+    }
+    
 	public function plugin_registered($bot) {
 		$this->bot = $bot;
 	}
@@ -135,21 +139,18 @@ class command {
 			$this->bot->say_message($channel, $login_output." ".$login_info." ".$output." ".$info." Done");
 		}
 	}
-	public function command_id($user, $channel, $args) {
-		require_once("/plugins/Minecraft/Blocks.php");
-		if ($args[1]) {
-			$block = implode('', $args);
-		}
-		else {
-			$block = $args[0];
-		}
-		$result = Blocks::GetID($block);
-		echo $result;
-		$this->bot->say_message($channel, "The ID for ".$block." is ".$result.".");
-	}
+	
 	/*public function command_reload($user, $channels, $args) {
 		if(user::isAdmin($args[0])) {
 			// Figure out how to reload	
 		}
 	}*/
+    
+    
+    /* TEMPORARY SPOT FOR PLUGIN COMMANDS */
+    public function command_loadedplugins($user, $channel, $args) {
+        foreach($this->config['plugins'] as $plugin) {
+            $this->bot->say_message($channel, "$plugin");
+        }
+    }
 }
