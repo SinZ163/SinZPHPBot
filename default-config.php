@@ -7,28 +7,27 @@
 * 
 */
 
-$config['network'] = 'irc.esper.net';
+$config['network'] = 'irc.network.tld';
 $config['port']    = '6667';
 $config['ssl']     = false; // NOT READY YET
-$config['nick']    = 'cloneBot';
-$config['ident']   = 'cloneBot';
-$config['realname']= 'cloneBot';
-$config['command'] = '.';
+$config['nick']    = 'SinZBot';
+$config['ident']   = 'SinZBot';
+$config['realname']= 'SinZBot';
+$config['command'] = '!';
 
 $config['channels']= array('#sinzbot');
-$config['admins']  = array('clone1018');
+$config['admins']  = array('SinZ');
 						
 
 /* Nick Server */
 $config['ns_enabled'] = false;
-$config['ns_nickserv'] = 'NickServ';
 $config['ns_nick'] = 'MCABot';
 $config['ns_pass'] = 'qwertyuiop';
 $config['ns_sla'] = false;
 
 /* CTCP */
 $config['ctcp_ping']    = 'default';
-$config['ctcp_version'] = 'cloneBot';
+$config['ctcp_version'] = 'SinZBot';
 
 /* Experimental */
 $config['host']    = 'axxim.net';
