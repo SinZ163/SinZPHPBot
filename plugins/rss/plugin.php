@@ -10,11 +10,10 @@ class rss {
 		$this->bot = $bot;
 	}
 	public function command_rss($user, $channel, $args) {
-		require_once("/plugins/sinz/rss/rss.php");
-		$rssarray = rss($args[0], $channel);
+		$rssarray = $this->rss($args[0], $channel);
 		foreach($rssarray as $rss) {
 			$chr = chr(2);
-			$msg = $msg.$rss['title']."".$char.'||'.$chr;
+			$msg = $msg.$rss['title']."".chr(2).' || '.chr(2);
 		}
 		$this->bot->say_message($channel, $msg);
 	}

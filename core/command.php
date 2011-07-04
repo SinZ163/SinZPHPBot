@@ -141,6 +141,6 @@ class command {
     }
     public function command_pluginload($user,$channel,$args) {
         include "./plugins/$args[0]/plugin.php";
-        $bot->plugin_register(new $args[0]($this->config));
+        $this->$bot->plugin_register(new $args[0]($this->config));
     }
 }
