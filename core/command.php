@@ -56,17 +56,7 @@ class command {
 		$echo = implode(" ",$args);
 		$this->bot->say_message($channel, $echo);
 	}
-	public function command_calc($user, $channel, $args) {
-		$calc = implode(" ",$args);
-		$data = file_get_contents("http://www.google.com/ig/calculator?hl=en&q=".urlencode($calc));
-		$data = preg_replace("/([,{])(.*?):/", '$1"$2":', $data); //hack, convert js to json.
-		$data = stripcslashes($data);
-		$data = preg_replace("/<sup>(.*?)<\/sup>/", '^$1', $data);
-		$data = json_decode($data,1);
-		//foreach ($data as &$node) { $node = html_entity_decode($node); }
-		$this->bot->say_message($channel, $data["lhs"]." = ".$data["rhs"]);	
-		$this->bot->say_message($channel, json_encode(array($data[error], $data[icc], $calc)));
-	}
+	
 	public function command_title($user, $channel, $args) {
 		$url = $args[0];
 		$str = file_get_contents($url);
@@ -90,10 +80,6 @@ class command {
 			fclose($fp);
 		}
 		$this->bot->say_message($channel, $msg);
-	}
-	public function command_google($user, $channel, $args) {
-		require_once("/plugins/google_search/plugin.php");
-		$this->bot->say_message($channel, sinz_google_search($args));
 	}
     public function command_pastebin($user, $channel, $args) {
             require_once("/plugins/pastebin/plugin.php");
@@ -152,5 +138,9 @@ class command {
         foreach($this->config['plugins'] as $plugin) {
             $this->bot->say_message($channel, "$plugin");
         }
+    }
+    public function command_pluginload($user,$channel,$args) {
+        include "./plugins/$args[0]/plugin.php";
+        $bot->plugin_register(new $args[0]($this->config));
     }
 }
