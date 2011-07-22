@@ -12,7 +12,7 @@ class minecraft {
         if (!(user::IPhasPermission("plugin.minecraft.paid", $user))) {
             $this->bot->say_notice($user, "You dont have permission to use this command.");
         } else {
-            require_once("/plugins/Minecraft/Minequery.php");
+            require_once("./Minequery.php");
             if ($args[0] == "") {
                 $url = "MCSteamed.net";
             }
@@ -77,7 +77,12 @@ class minecraft {
         }
         $result = Blocks::GetID($block);
         echo $result;
-        $this->bot->say_message($channel, "The ID for " . $block . " is " . $result . ".");
+		if ($result) {
+			$this->bot->say_message($channel, "The ID for " . $block . " is " . $result . ".");
+		}
+		else {
+			$this->bot->say_message($channel, "Either you typed it wrong, or it doesn't exist (Or we haven't added that name yet)");
+		}
     }
 
 }

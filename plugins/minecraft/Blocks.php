@@ -124,7 +124,7 @@ class Blocks {
         93 => 'Repeater(Off)',
         94 => 'Repeater(On)',
         95 => array("MannCoSupplyCrate", "MannCoChest", "LockedChest", "SteveCoSupplyCreate", "SteveCo.SupplyCrate", "AprilFoolsChest", "SteveCoChest", "SteveCo.Chest", "LightEmittingBlockOfLightness"),
-		96 => array('TrapDoor', 'Hatch'));
+		96 => array('TrapDoor', 'Hatch'),
 		256 => 'IronShovel',
 		257 => array("IronPick", "IronPickaxe"),
 		258 => 'IronAxe',
@@ -229,7 +229,7 @@ class Blocks {
 		'351:6' => 'TealDye',
 		'351:7' => array("LightGrayDye", "LightGreyDye", "GrayDye", "GreyDye"),
 		'351:8' => array("DarkGrayDye", "DarkGreyDye", "GrayDye", "GreyDye"),
-		'351:9' => array("LightPinkDye" "PinkDye"),
+		'351:9' => array("LightPinkDye", "PinkDye"),
 		'351:10' => array("LimeGreenDye", "GreenDye"),
 		'351:11' => 'YellowDye',
 		'351:12' => 'LightBlueDye',
@@ -245,7 +245,7 @@ class Blocks {
 		358 => 'Map',
 		359 => 'Shears',
 		2256 => 'GoldRecord',
-		2257 => 'GreenRecord',
+		2257 => 'GreenRecord');
 		$block_name = strtolower($request);
 		foreach ($DB as $id => $value) {
 			if (!(is_array($value))) {

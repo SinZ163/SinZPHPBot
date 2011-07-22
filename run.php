@@ -11,12 +11,14 @@ function __pluginload($plugin) {
 $core = new core($config);
 $command = new command($config);
 $user = new user($config);
+$crypt = new crypt($config);
 
 $bot = new bot($config['network'],$config['port'],$config['nick'],$config['ident'],$config['realname']); //start bot and use defaults.
 $bot->plugin_register(new core($config));
 $bot->plugin_register(new command($config));
 $bot->plugin_register(new user($config));
 $bot->plugin_register(new CTCP($config));
+$bot->plugin_register(new crypt($config));
 /* Load Other Plugins */
 foreach($config['plugins'] as $plugin){
     include "./plugins/$plugin/plugin.php";
