@@ -1,18 +1,30 @@
 <?php
 
+/**
+ * OperHelper
+ *
+ * A simple plugin to help opers with their tedious tasks.
+ *
+ * @author		clone1018
+ * @copyright           Copyright (c) 2008 - 2011, Axxim
+ * @link		http://axxim.net/
+ * @since		Version 1.0
+ */
 class operhelper {
 
-    private $bot = null;
-
-    public function plugin_registered($bot) {
-        $this->bot = $bot;
-    }
-
-    public function operhelper($config) {
+    function __construct() {
         $this->config = $config;
+        $this->bot = $bot;
+        $this->user = $user;
+        $this->plugin = json_decode(file_get_contents('./plugin.json'));
     }
 
-    public function command_defcon($user, $channel, $args) {
+    /**
+     * Defcon Command
+     *
+     * @return	void
+     */
+    public function defcon($user, $channel, $args) {
         if ($this->isAdmin($user)) {
             $defcon = "DEFCON " . $args[0];
             $this->bot->say_message("OPERSERV", $defcon);
@@ -20,16 +32,17 @@ class operhelper {
         }
     }
 
-    function isAdmin($user) {
-        foreach ($this->config['admins'] as $admin) {
-            if ($user == $admin) {
-                return true;
-            } else {
-                return false;
-            }
+    /**
+     * hasoper Function
+     *
+     * @return	boolean
+     */
+    private function hasoper() {
+        if ($this->user->oper($user)) {
+            return true;
+        } else {
+            return false;
         }
     }
 
 }
-
-?>

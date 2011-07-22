@@ -1,17 +1,53 @@
 <?php
+/**
+ * Core
+ *
+ * A simple plugin to help opers with their tedious tasks.
+ *
+ * @author		ylt, SinZ, clone1018
+ * @version             2.0
+ */
+class Core extends Bot {
 
-class core {
-
-    private $bot = null;
-
-    public function core($config) {
+    function _construct() {
         $this->config = $config;
     }
-
-    public function plugin_registered($bot) {
-        $this->bot = $bot;
+    
+    /*
+     * Startup Functions
+     * 
+     * Commands to run after bot is connected to network.
+     * 
+     * @return bool
+     */
+    private function startup() {
+        
     }
-
+    
+    /*
+     * Network Ping
+     * 
+     * On Ping return Pong
+     * 
+     * @return string
+     */
+    public function ping($server) {
+        $this->bot->raw("PONG ", $server);
+    }
+    
+    public function privmsg() {
+        $message = explode(" ", $args[1]);
+        if ($message[0][0] == $this->config['command']) { //command
+            //args: user, channel, arguments
+            $this->bot->plugin_event("command_" . substr($message[0], 1), $prefix, $args[0], array_splice($message, 1));
+        } else {
+            //cba
+            //$this->bot->plugin_event("message);
+        }
+    }
+    /*
+     * @TODO Make this not stupid
+     */
     public function network_MODE($prefix, $command, $args) {
 
         foreach ($this->config['channels'] as $chan) {
@@ -25,10 +61,6 @@ class core {
         foreach ($this->config['startup'] as $cmd) {
             $this->bot->send_message("", $cmd);
         }
-    }
-
-    public function network_ping($prefix, $command, $args) {
-        $this->bot->send_message("", "PONG", $args[0]);
     }
 
     public function network_privmsg($prefix, $command, $args) {

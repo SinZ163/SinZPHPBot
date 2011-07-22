@@ -1,8 +1,6 @@
 <?php
 
-class command {
-
-    private $bot = null;
+class command extends bot{
 
     public function command($config) {
         $this->config = $config;

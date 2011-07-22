@@ -8,11 +8,4 @@ clone1018
 Contrillion
 
 TO DO
-Website
-Web Control Panel
-MongoDB Logging
-MySQL Logging
-File Logging
-Permissions
-Higher-Quality config
-Make this readme better
+Pass $config to all files.
