@@ -12,7 +12,7 @@ class minecraft {
         if (!(user::IPhasPermission("plugin.minecraft.paid", $user))) {
             $this->bot->say_notice($user, "You dont have permission to use this command.");
         } else {
-            require_once("/plugins/Minecraft/Minequery.php");
+            require_once("./minequery.php");
             if ($args[0] == "") {
                 $url = "MCSteamed.net";
             }
