@@ -124,7 +124,7 @@ class Blocks {
         93 => 'Repeater(Off)',
         94 => 'Repeater(On)',
         95 => array("MannCoSupplyCrate", "MannCoChest", "LockedChest", "SteveCoSupplyCreate", "SteveCo.SupplyCrate", "AprilFoolsChest", "SteveCoChest", "SteveCo.Chest", "LightEmittingBlockOfLightness"),
-		96 => array('TrapDoor', 'Hatch'),
+		96 => array('TrapDoor', 'Hatch'));
 		256 => 'IronShovel',
 		257 => array("IronPick", "IronPickaxe"),
 		258 => 'IronAxe',
