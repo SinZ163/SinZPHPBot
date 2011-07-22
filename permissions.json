@@ -1,0 +1,39 @@
+{
+    "users": {
+        "irc.cwictech.net": {
+            "SinZ": {
+                "nick": "SinZ",
+                "ident": "SinZ",
+                "hostmark": "mca.uk.to",
+                "password": "",
+                "group": "Owner",
+                "permissions": {
+                    "*": true,
+                    "plugin.channel_commands.owner": false
+                    "plugin.channel_commands.deowner": false
+                },
+                "channels": {
+                    "#craftnode": {
+                        "group": "Co-Owner",
+                        "permissions": {
+                            "*": true,
+                            "plugin.channel_commands.owner": false,
+                            "plugin.channel_commands.deowner": false
+                        }
+                    }
+                }
+            }
+        }
+        "global:" {
+            "Example": {
+                "nick": "Herp",
+                "ident": "Derp",
+                "hostmark": "herp.derp",
+                "group": "default",
+                "permissions": {
+                    "plugin.minecraft.paid": true
+                }
+            }
+        }
+    }
+}
