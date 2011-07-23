@@ -32,10 +32,14 @@ class Bot {
         $plugin->register(new core($this->config));
         $plugin->register(new core($this->config));
 
-        foreach ($this->config['plugins'] as $plugin) {
-            include "../plugins/$plugin/plugin.php";
-            $plugin->register(new $plugin($this->config));
-        }
+        /*
+         * foreach ($this->config['plugins'] as $plugin) {
+         * include "../plugins/$plugin/plugin.php";
+         *      $plugin->register(new $plugin($this->config));
+         *  }
+         * 
+         */
+            
     }
 
     private function parse_message($line) {
@@ -71,7 +75,6 @@ class Bot {
     private $sock = null;
 
     public function connect() {
-        var_dump($this->config);
         $this->sock = fsockopen('pandora.cwictech.net', 3306, $errno, $errstr, 32768);
         stream_set_timeout($this->sock, 2);
         $errorlevel = stream_get_meta_data($this->sock);
