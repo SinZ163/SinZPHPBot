@@ -1,6 +1,10 @@
 <?php
 class CTCP {
     private $bot = null;
+    
+    public function __construct() {
+        
+    }
     public function plugin_registered($bot) {
 	$this->bot = $bot;
     }

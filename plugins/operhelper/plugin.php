@@ -12,11 +12,11 @@
  */
 class operhelper {
 
-    function __construct() {
+    public function __construct() {
         $this->config = $config;
         $this->bot = $bot;
         $this->user = $user;
-        $this->plugin = json_decode(file_get_contents('./plugin.json'));
+        //$this->plugin = json_decode(file_get_contents('plugin.json'));
     }
 
     /**

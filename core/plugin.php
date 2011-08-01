@@ -2,9 +2,9 @@
 
 class Plugin extends Bot {
 
-    private $modules = array();
-
-    function _construct() {
+    private $plugins = array();
+    
+    function __construct() {
         
     }
 
@@ -25,7 +25,9 @@ class Plugin extends Bot {
      */
 
     public function loaded() {
-        
+        foreach(get_declared_classes() as $lplug){
+            $bot->raw($lplug);
+        }
     }
 
     /*
@@ -37,26 +39,28 @@ class Plugin extends Bot {
      */
 
     public function register($class) {
-        $this->modules[] = $class;
-        $class->_construct($this);
+        $this->plugins[] = $class;
+        $class->__construct($this);
     }
 
     /*
      * Plugin Event
      * 
-     * Not exactly sure what this does
+     * Checks for a function that matches the command
      * 
      * @return void
      */
 
-    public function event($name) {
-        $name = strtolower($name);
-
+    public function event($prefix, $plugin, $command, $args) {
+        $plugin = strtolower($plugin);
+        $command = strtolower($command);
+        echo $plugin;
+        
         $args = func_get_args();
         $args = array_splice($args, 1);
-        foreach ($this->modules as $module) {
-            if (method_exists($module, $name)) {
-                call_user_func_array(array($module, $name), $args);
+        foreach($this->plugins as $plugin) {
+            if(class_exists($plugin) && method_exists($plugin, $command)) {
+                call_user_func_array(array($plugin, $name));
             }
         }
     }
