@@ -31,6 +31,18 @@ class operhelper {
             echo $this->bot->say_message("OPERSERV", $defcon);
         }
     }
+    
+    /**
+     * Defcon Command
+     *
+     * @return    void
+     */
+    public function gline($user, $channel, $args) {
+        if ($this->isAdmin($user)) {
+            $this->bot->raw("/GLINE ".$user." ".$args);
+            echo $this->bot->raw("/GLINE ".$user." ".$args);
+        }
+    }
 
     /**
      * hasoper Function
