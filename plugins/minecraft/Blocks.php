@@ -138,7 +138,6 @@ class Blocks {
 	107 => 'FenceGate',
 	108 => 'BrickStairs',
 	109 => 'StoneBrickStairs',
-	
 		256 => 'IronShovel',
 		257 => array("IronPick", "IronPickaxe"),
 		258 => 'IronAxe',
@@ -258,6 +257,15 @@ class Blocks {
 		357 => 'Cookie',
 		358 => 'Map',
 		359 => 'Shears',
+		360 => 'MelonSlice',
+		361 => 'PumpkinSeeds',
+		362 => 'MelonSeeds',
+		363 => 'RawBeef',
+		364 => 'Steak',
+		365 => 'RawChicken',
+		366 => 'CookedChicken',
+		367 => 'RottenFlesh',
+		368 => 'EnderPearl',
 		2256 => 'GoldRecord',
 		2257 => 'GreenRecord');
 		$block_name = strtolower($request);
