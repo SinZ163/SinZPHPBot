@@ -106,8 +106,11 @@ class bot {
         }
     }
 
-    public function say_message($who, $msg) {
-        $this->send_message("", "PRIVMSG", $who, ":" . $msg);
+    public function privmsg($who, $msg) {
+        $this->send_message("", "PRIVMSG ", $who, ":" . $msg);
+    }
+    public function notice($who, $msg) {
+        $this->send_message("", "NOTICE" , $who, ":" . $msg);
     }
 
     public function start() {

@@ -8,7 +8,7 @@ class user {
 	public function user($config) {
 		$this->config = $config;
 	}
-	public function explodeIP($ip) { // turns $ip which is a string, nick!ident@hostmark into $result which is an array, 0 = nick, 1 = ident, 2 = hostmark
+	/*public function explodeIP($ip) { // turns $ip which is a string, nick!ident@hostmark into $result which is an array, 0 = nick, 1 = ident, 2 = hostmark
 		$address = explode("@", $ip);
 		$hostmark = $address[1];
 		$nick_ident = explode("!", $address[1]);
@@ -21,7 +21,7 @@ class user {
 		$address = array($nick_ident, $result[2]);
 		$ip = implode("@", $address);
 		return $ip;
-	}
+	}*/
 	public function hasPermission($node, $ip, $default = false) {
 		$user = explodeIP($ip);
 		$nick = $user[0];
@@ -33,15 +33,16 @@ class user {
 	public function IPhasPermission($node, $IP) { // only here untill its all finished.
 		return true;
 	}
-	public function getDB() {
+	/*public function getDB() {
 		$DB = file_get_contents("permissions.json");
 		return json_decode($DB);
 	}
-	public function setDB($change);
+	public function setDB($change) {
+    }
 	public function getPassword($network, $user, $attempt) {
 		$DB = getDB();
         $password = $DB['users'][$network][$user]["password"];
-        if $password == crypt::decode($attempt, $user) {
+        if($password == crypt::decode($attempt, $user)) {
             return true;
         }
 		else return false;
@@ -53,7 +54,7 @@ class user {
 		}
 	}
 	/*Command Interface for Bans, and group/account controlling */
-	public function command_login($hostmark, $channel, $args) { // Syntax: `login USER PASSWORD
+	/*public function command_login($hostmark, $channel, $args) { // Syntax: `login USER PASSWORD
 		if ($attempts[$user[2]] == 3) {
 			$this->bot->say_message($channel, "You have allready been banned, Please try again in a day or so.");
 		}
@@ -62,11 +63,11 @@ class user {
 		$user = getUser($ip); // $user[0] = nick, $user[1] = ident, $user[2] = hostmark
 		$pass_test = getPassword($this->config['network'], $args[0], $args[1]);
 		if (!($pass_test)) {
-			if ($attempts[$user[2]]) = 1) {
+			if (($attempts[$user[2]]) == 1) {
 				$attempts[$user] = 2;
 				$this->bot->say_message($channel, "You have given an invalid user/pass, You have used 2 of 3 attempts.");
 			}
-			elseif ($attempts[$user[2]]) = 2) {
+			elseif (($attempts[$user[2]]) == 2) {
 				$attempts[$user] = 3;
 				$this->bot->say_message($channel, "You have given an invalid user/pass, You have used 3 of 3 attempts, You have been locked out of the system for 1 day.");
 			}
@@ -76,5 +77,5 @@ class user {
         else {
             
         }
-	}
+	}*/
 }

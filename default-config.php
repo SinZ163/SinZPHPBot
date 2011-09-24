@@ -19,6 +19,7 @@ $config['nick']    = 'SinZBot';
 $config['ident']   = 'SinZBot';
 $config['realname']= 'SinZBot';
 $config['command'] = '!';
+$config['notes_prefix'] = '?';
 
 $config['channels']= array('#sinzbot');
 $config['admins']  = array('SinZ');
