@@ -266,8 +266,8 @@ class Blocks {
 		366 => 'CookedChicken',
 		367 => 'RottenFlesh',
 		368 => 'EnderPearl',
-		2256 => 'GoldRecord',
-		2257 => 'GreenRecord');
+		2256 => array('GoldRecord', 'YellowRecord', 'GoldDisk', 'YellowDisk'),
+		2257 => array('GreenDisk','GreenRecord'));
 		$block_name = strtolower($request);
 		foreach ($DB as $id => $value) {
 			if (!(is_array($value))) {
