@@ -42,7 +42,9 @@ class command {
         if (!(user::IPhasPermission("core.command.join", $user))) {
             $this->bot->privmsg($user, "You dont have permission to use this command.");
         } else {
-            $this->bot->send_message("", "JOIN", $args[0]);
+            if ($args[0][0] == "#") {
+                $this->bot->send_message("", "JOIN", $args[0]);
+            }
         }
     }
 
@@ -67,10 +69,10 @@ class command {
         $this->bot->privmsg($channel, $txt[1] . " (" . $args[0] . ")");
     }
 
-    public function command_eval($user, $channel, $args) {
+    /*public function command_eval($user, $channel, $args) {
         $message = implode(" ", $args);
         $this->bot->privmsg($channel, eval("return " . substr($message, 0)));
-    }
+    }*/
 
     public function command_port($user, $channel, $args) {
         $fp = fsockopen($args[0], $args[1], $errno, $errstr, 10);
@@ -105,7 +107,7 @@ class command {
 
     /* TEMPORARY SPOT FOR PLUGIN COMMANDS */
 
-    public function command_loadedplugins($user, $channel, $args) {
+    /*public function command_loadedplugins($user, $channel, $args) {
         foreach ($this->config['plugins'] as $plugin) {
             $this->bot->privmsg($channel, "$plugin");
         }
@@ -114,6 +116,6 @@ class command {
     public function command_pluginload($user, $channel, $args) {
         include "./plugins/$args[0]/plugin.php";
         $this->$bot->plugin_register(new $args[0]($this->config));
-    }
+    }*/
 
 }

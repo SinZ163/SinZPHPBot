@@ -127,10 +127,10 @@ class bot {
         }
     }
 
-    public function __autoload($class) {
+    /*public function __autoload($class) {
         include "plugins/" . $class . '/plugin.php';
         $this->plugin_register(new $class());
-    }
+    }*/
 
 }
 

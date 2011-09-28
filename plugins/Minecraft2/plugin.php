@@ -3,11 +3,11 @@
 class Minecraft2 {
 
     private $bot = null;
-
     public function plugin_registered($bot) {
         $this->bot = $bot;
+        include("ping.php");
+        $this->mcping = new mcping;
     }
-
     public function command_paid($user, $channel, $args) {
         if (!(user::IPhasPermission("plugin.minecraft.paid", $user))) {
             $this->bot->say_notice($user, "You dont have permission to use this command.");
@@ -39,49 +39,43 @@ class Minecraft2 {
 		}
     }
     
-    public function command_mcping($user, $channel, $args) {
+    public function command_mcmotd($user, $channel, $args) {
         $ip = $args[0];
-        $port = $args[1];
-        $srvinfo = $this->ping($ip, $port);
+        if ($args[1]) {
+            $port = $args[1];
+        }
+        else $port = 25565;
+        $srvinfo = $this->mcping->ping($ip, $port);
         $motd = $srvinfo["motd"];
         $this->bot->privmsg($channel, "The MOTD for ".$ip." is ".$motd);
     }
     
+    public function command_mcping($user, $channel, $args) {
+        $ip = $args[0];
+        if ($args[1]) {
+            $port = $args[1];
+        }
+        else $port = 25565;
+        $srvinfo = $this->mcping->ping($ip, $port);
+        if ($srvinfo) {
+        $motd = $srvinfo['motd'];
+        $players = $srvinfo["players"];
+        $max_players = $srvinfo["max_players"];
+        $this->bot->privmsg($channel, "".$motd." (".$players."/".$max_players.")");
+        }
+        else $this->bot->privmsg($channel, "Cannot connect to ".$ip.":".$port);
+    }
+    
     public function command_mcplayers($user, $channel, $args) {
         $ip = $args[0];
-        $port = $args[1];
-        $srvinfo = $this->ping($ip, $port);
+        if ($args[1]) {
+            $port = $args[1];
+        }
+        else $port = 25565;
+        $srvinfo = $this->mcping->ping($ip, $port);
         $players = $srvinfo["players"];
         $max_players = $srvinfo["max_players"];
         $this->bot->privmsg($channel, "Their is currently ".$players."/".$max_players." on ".$ip);
-    }
-    
-    public function ping($ip, $port) {
-        $fp = fsockopen($ip, $port, $errno, $errstr, 5); // Socket for connecting to server
-    
-        if (!$fp) { 
-            echo "Error";
-        } else {
-            $out = "\xFE"; // Hex needed for server info
-        
-            fwrite($fp, $out);
-            while (!feof($fp)) {
-                $result .= fgets($fp, 128);
-            }
-            fclose($fp);
-            
-            // Remove extra spaces between characters
-            $result = str_replace("\x00", "", $result); 
-            $result = str_replace("\x1A", "", $result); 
-            $result = str_replace("\xFF", "", $result);
-            
-            $srvinfo = explode("\xA7",$result); 
-            
-            return array("motd" => $srvinfo[0], "players" => $srvinfo[1], "max_players" => $srvinfo[2]);
-            echo "motd: " . $srvinfo[0] . "\n";
-            echo "players: " . $srvinfo[1] . "\n";
-            echo "max_players: " . $srvinfo[2] . "\n";
-        }
     }
 }
 

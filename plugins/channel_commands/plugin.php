@@ -67,5 +67,6 @@ class channel_commands {
 		else {
 			$this->bot->send_message("", "MODE ".$channel." -q ".$args[0]);
 		}
+    }
 }
 ?>
