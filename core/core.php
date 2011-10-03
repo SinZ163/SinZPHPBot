@@ -20,10 +20,7 @@ class core {
         if ($this->config['ns_enabled']) {
             $ns_msg = "IDENTIFY " . $this->config['ns_pass'];
             echo $ns_msg;
-            $this->bot->say_message($this->config['ns_nickserv'], $ns_msg);
-        }
-        foreach ($this->config['startup'] as $cmd) {
-            $this->bot->send_message("", $cmd);
+            $this->bot->privmsg($this->config['ns_nickserv'], $ns_msg);
         }
     }
 

@@ -1,5 +1,4 @@
 <?php
-
 class Minecraft2 {
 
     private $bot = null;

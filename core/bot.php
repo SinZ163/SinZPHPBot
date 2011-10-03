@@ -2,13 +2,13 @@
 
 class bot {
 
-    public function bot($server, $port, $nick, $user, $realname) {
-
-        $this->server = $server;
-        $this->port = $port;
-        $this->nick = $nick;
-        $this->user = $user;
-        $this->realname = $realname;
+    public function bot($config) {
+        $this->config = $config;
+        $this->server = $config['network'];
+        $this->port = $config['port'];
+        $this->nick = $config['nick'];
+        $this->user = $config['ident'];
+        $this->realname = $config['realname'];
     }
 
     private $modules = array();
@@ -117,6 +117,7 @@ class bot {
         if (!$this->sock) {
             $this->connect();
         }
+        $this->pluginload();
         while (!feof($this->sock)) {
             $line = fgets($this->sock);
             list($prefix, $command, $args) = $this->parse_message($line);
@@ -126,11 +127,15 @@ class bot {
             $this->flush_message();
         }
     }
-
     /*public function __autoload($class) {
         include "plugins/" . $class . '/plugin.php';
         $this->plugin_register(new $class());
     }*/
-
+    public function pluginload() {
+        foreach($this->config['plugins'] as $plugin) {
+            include 'plugins/'. $plugin .'/plugin.php';
+            $this->plugin_register(new $plugin($config));
+        }
+    }
 }
 
