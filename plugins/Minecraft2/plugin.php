@@ -39,38 +39,28 @@ class Minecraft2 {
     }
     
     public function command_mcmotd($user, $channel, $args) {
-        $ip = $args[0];
-        if ($args[1]) {
-            $port = $args[1];
-        }
-        else $port = 25565;
-        $srvinfo = $this->mcping->ping($ip, $port);
+        $port = $args[1];
+        $info = $this->mcping->ping($ip, $port);
         $motd = $srvinfo["motd"];
         $this->bot->privmsg($channel, "The MOTD for ".$ip." is ".$motd);
     }
     
     public function command_mcping($user, $channel, $args) {
         $ip = $args[0];
-        if ($args[1]) {
-            $port = $args[1];
-        }
-        else $port = 25565;
+        $port = $args[1];
         $srvinfo = $this->mcping->ping($ip, $port);
         if ($srvinfo) {
-        $motd = $srvinfo['motd'];
-        $players = $srvinfo["players"];
-        $max_players = $srvinfo["max_players"];
-        $this->bot->privmsg($channel, "".$motd." (".$players."/".$max_players.")");
+        	$motd = $srvinfo['motd'];
+        	$players = $srvinfo["players"];
+        	$max_players = $srvinfo["max_players"];
+        	$this->bot->privmsg($channel, "".$motd." (".$players."/".$max_players.")");
         }
         else $this->bot->privmsg($channel, "Cannot connect to ".$ip.":".$port);
     }
     
     public function command_mcplayers($user, $channel, $args) {
         $ip = $args[0];
-        if ($args[1]) {
-            $port = $args[1];
-        }
-        else $port = 25565;
+	$port = $args[1];
         $srvinfo = $this->mcping->ping($ip, $port);
         $players = $srvinfo["players"];
         $max_players = $srvinfo["max_players"];
