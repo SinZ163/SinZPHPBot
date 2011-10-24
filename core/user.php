@@ -5,10 +5,10 @@ class user {
 	public function plugin_registered($bot) {
 		$this->bot = $bot;
 	}
-	public function user($config) {
-		$this->config = $config;
-	}
-	/*public function explodeIP($ip) { // turns $ip which is a string, nick!ident@hostmark into $result which is an array, 0 = nick, 1 = ident, 2 = hostmark
+    public function __construct($config) {
+        $this->config = $config;
+    }
+	public function explodeIP($ip) { // turns $ip which is a string, nick!ident@hostmark into $result which is an array, 0 = nick, 1 = ident, 2 = hostmark
 		$address = explode("@", $ip);
 		$hostmark = $address[1];
 		$nick_ident = explode("!", $address[1]);
@@ -21,7 +21,7 @@ class user {
 		$address = array($nick_ident, $result[2]);
 		$ip = implode("@", $address);
 		return $ip;
-	}*/
+	}
 	public function hasPermission($node, $ip, $default = false) {
 		$user = explodeIP($ip);
 		$nick = $user[0];
@@ -33,6 +33,19 @@ class user {
 	public function IPhasPermission($node, $IP) { // only here untill its all finished.
 		return true;
 	}
+    public function isAdmin($user){
+        $hostmark = user::explodeIP($user);
+        $nick = $hostmark[0];
+        $admins = $this->config['admins'];
+        foreach ($admins as $admin) {
+            echo $admin;
+            echo $nick;
+            if ($nick == $admin) {
+                return true;
+            }
+        }
+        return false;
+    }
 	/*public function getDB() {
 		$DB = file_get_contents("permissions.json");
 		return json_decode($DB);

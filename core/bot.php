@@ -63,13 +63,13 @@ class bot {
     private $sock = null;
 
     public function connect() {
-        $this->sock = fsockopen($this->server, $this->port, $errno, $errstr, 32768);
+        $this->sock = fsockopen($this->config['network'], $this->config['port'], $errno, $errstr, 5);
         stream_set_timeout($this->sock, 2);
         $errorlevel = stream_get_meta_data($this->sock);
 
-        $this->send_message("", "NICK", $this->nick);
-        $this->send_message("", "USER", $this->user, "8", "*", $this->realname);
-        if ($errorinfo['timed_out']) {
+        $this->send_message("", "NICK", $this->config['nick']);
+        $this->send_message("", "USER", $this->config['ident'], "8", "*", $this->config['realname']);
+        if ($errstr['timed_out']) {
             echo 'Connection timed out!';
         }
         //$this->send_message("","PRIVMSG", "#bottest", "FUCK YOU!");

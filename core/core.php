@@ -15,11 +15,11 @@ class core {
     public function network_MODE($prefix, $command, $args) {
 
         foreach ($this->config['channels'] as $chan) {
+            echo $chan . "\r\n";
             $this->bot->send_message("", "JOIN", $chan);
         }
         if ($this->config['ns_enabled']) {
             $ns_msg = "IDENTIFY " . $this->config['ns_pass'];
-            echo $ns_msg;
             $this->bot->privmsg($this->config['ns_nickserv'], $ns_msg);
         }
     }

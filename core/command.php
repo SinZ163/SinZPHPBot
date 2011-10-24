@@ -69,10 +69,10 @@ class command {
         $this->bot->privmsg($channel, $txt[1] . " (" . $args[0] . ")");
     }
 
-    /*public function command_eval($user, $channel, $args) {
+    public function command_eval($user, $channel, $args) {
         $message = implode(" ", $args);
         $this->bot->privmsg($channel, eval("return " . substr($message, 0)));
-    }*/
+    }
 
     public function command_port($user, $channel, $args) {
         $fp = fsockopen($args[0], $args[1], $errno, $errstr, 10);

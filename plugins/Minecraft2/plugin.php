@@ -60,7 +60,10 @@ class Minecraft2 {
         $motd = $srvinfo['motd'];
         $players = $srvinfo["players"];
         $max_players = $srvinfo["max_players"];
-        $this->bot->privmsg($channel, "".$motd." (".$players."/".$max_players.")");
+        $bold = "\u0002";
+        $players1 = chr(3).'21 '.$players.chr(3);
+        $max_players1 = chr(3).'21 '.$max_players.chr(3);
+        $this->bot->privmsg($channel, $motd . $bold . " ( " . $bold . $players1 ." ". $bold . " / " . $bold ." ". $max_players1 ." ". $bold . " ) " . $bold );
         }
         else $this->bot->privmsg($channel, "Cannot connect to ".$ip.":".$port);
     }
