@@ -39,41 +39,49 @@ class Minecraft2 {
     }
     
     public function command_mcmotd($user, $channel, $args) {
-        $ip = $args[0];
-        if ($args[1]) {
-            $port = $args[1];
-        }
-        else $port = 25565;
-        $srvinfo = $this->mcping->ping($ip, $port);
+        $port = $args[1];
+        $info = $this->mcping->ping($ip, $port);
         $motd = $srvinfo["motd"];
         $this->bot->privmsg($channel, "The MOTD for ".$ip." is ".$motd);
     }
     
     public function command_mcping($user, $channel, $args) {
-        $ip = $args[0];
-        if ($args[1]) {
+        // ip check
+        foreach ($args[0] as $letter) {
+            if ($letter == ":") {
+                $q = true;
+            }
+        }
+        if ($q) {
+            $address = explode(":", $args[0]);
+            $ip = $address[0];
+            $port = $address[1];
+        }
+        else $ip = $args[0];
+        // port check
+        if ($args[1] && $port == false) {
             $port = $args[1];
         }
-        else $port = 25565;
+        elseif ($port == false) {
+            $port = 25565;
+        }
+        // actual script
         $srvinfo = $this->mcping->ping($ip, $port);
         if ($srvinfo) {
-        $motd = $srvinfo['motd'];
-        $players = $srvinfo["players"];
-        $max_players = $srvinfo["max_players"];
-        $bold = "\u0002";
-        $players1 = chr(3).'21 '.$players.chr(3);
-        $max_players1 = chr(3).'21 '.$max_players.chr(3);
-        $this->bot->privmsg($channel, $motd . $bold . " ( " . $bold . $players1 ." ". $bold . " / " . $bold ." ". $max_players1 ." ". $bold . " ) " . $bold );
+        	$motd = $srvinfo['motd'];
+        	$players = $srvinfo["players"];
+        	$max_players = $srvinfo["max_players"];
+            $bold = chr(2);
+            $reds = chr(3) . "05";
+            $rede = chr(3);
+        	$this->bot->privmsg($channel, $motd. $bold." (".$bold.$reds.$players.$rede.$bold."/".$bold.$reds.$max_players.$rede.$bold.")".$bold);
         }
         else $this->bot->privmsg($channel, "Cannot connect to ".$ip.":".$port);
     }
     
     public function command_mcplayers($user, $channel, $args) {
         $ip = $args[0];
-        if ($args[1]) {
-            $port = $args[1];
-        }
-        else $port = 25565;
+	$port = $args[1];
         $srvinfo = $this->mcping->ping($ip, $port);
         $players = $srvinfo["players"];
         $max_players = $srvinfo["max_players"];

@@ -11,7 +11,7 @@ class user {
 	public function explodeIP($ip) { // turns $ip which is a string, nick!ident@hostmark into $result which is an array, 0 = nick, 1 = ident, 2 = hostmark
 		$address = explode("@", $ip);
 		$hostmark = $address[1];
-		$nick_ident = explode("!", $address[1]);
+		$nick_ident = explode("!", $address[0]);
 		$result = array($nick_ident[0], $nick_ident[1], $hostmark);
 		return $result;
 	}

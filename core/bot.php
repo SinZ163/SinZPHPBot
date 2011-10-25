@@ -110,7 +110,8 @@ class bot {
         $this->send_message("", "PRIVMSG ", $who, ":" . $msg);
     }
     public function notice($who, $msg) {
-        $this->send_message("", "NOTICE" , $who, ":" . $msg);
+        $user = user::explodeIP($who);
+        $this->send_message("", "NOTICE" , $user[0], ":" . $msg);
     }
 
     public function start() {

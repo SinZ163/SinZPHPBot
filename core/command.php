@@ -70,9 +70,13 @@ class command {
     }
 
     public function command_eval($user, $channel, $args) {
+        if (!(user::isAdmin($user))) {
+            $this->bot->notice($user, "You are not authorized to use eval");
+        }
+        else {
         $message = implode(" ", $args);
         $this->bot->privmsg($channel, eval("return " . substr($message, 0)));
-    }
+    }}
 
     public function command_port($user, $channel, $args) {
         $fp = fsockopen($args[0], $args[1], $errno, $errstr, 10);
@@ -85,6 +89,10 @@ class command {
         $this->bot->privmsg($channel, $msg);
     }
 
+    public function command_admins($user, $channel, $args) {
+        $list = implode(" ", $this->config['admins']);
+        $this->bot->privmsg($channel, $list);
+    }
     public function command_pastebin($user, $channel, $args) {
         require_once("/plugins/pastebin/plugin.php");
         $this->bot->privmsg($channel, sinz_pastebin($args));
