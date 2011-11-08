@@ -4,11 +4,6 @@ class bot {
 
     public function bot($config) {
         $this->config = $config;
-        $this->server = $config['network'];
-        $this->port = $config['port'];
-        $this->nick = $config['nick'];
-        $this->user = $config['ident'];
-        $this->realname = $config['realname'];
     }
 
     private $modules = array();
@@ -128,10 +123,6 @@ class bot {
             $this->flush_message();
         }
     }
-    /*public function __autoload($class) {
-        include "plugins/" . $class . '/plugin.php';
-        $this->plugin_register(new $class());
-    }*/
     public function pluginload() {
         foreach($this->config['plugins'] as $plugin) {
             include 'plugins/'. $plugin .'/plugin.php';

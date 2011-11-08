@@ -11,9 +11,9 @@ class Minecraft2 {
         if (!(user::IPhasPermission("plugin.minecraft.paid", $user))) {
             $this->bot->say_notice($user, "You dont have permission to use this command.");
         } else {
-            $url = file("http://www.minecraft.net/haspaid.jsp?user=" . urlencode($args[0]));
+            $url = file_get_contents("http://www.minecraft.net/haspaid.jsp?user=" . urlencode($args[0]));
 
-            if ($url[3]) {
+            if ($url == "true") {
                 $this->bot->privmsg($channel, $args[0] . " has paid for Minecraft, I'll give him a hug some other time!");
             } else {
                 $this->bot->privmsg($channel, $args[0] . " hasn't paid for Minecraft!, That bastard!");

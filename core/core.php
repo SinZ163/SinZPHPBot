@@ -15,7 +15,6 @@ class core {
     public function network_MODE($prefix, $command, $args) {
 
         foreach ($this->config['channels'] as $chan) {
-            echo $chan . "\r\n";
             $this->bot->send_message("", "JOIN", $chan);
         }
         if ($this->config['ns_enabled']) {
@@ -30,12 +29,19 @@ class core {
 
     public function network_privmsg($prefix, $command, $args) {
         $message = explode(" ", $args[1]);
+        $name = user::implodeIP($prefix);
         if ($message[0][0] == $this->config['command']) { //command
             //args: user, channel, arguments
             $this->bot->plugin_event("command_" . substr($message[0], 1), $prefix, $args[0], array_splice($message, 1));}
         /*elseif ($message[0][0] == $this->config['notes_prefix']) { //notes prefix
             //args: user, channel, arguments
-            $this->bot->plugin_event("readNote"), substr($message[0], 1), substr($message[0], 1), $prefix, $args[0], array_splice($message, 1));} */
+            $this->bot->plugin_event("readNote"), substr($message[0], 1), substr($message[0], 1), $prefix, $args[0], array_splice($message, 1));} */    
+        elseif ($name[0] == $this->config['craftirc'] && $this->config['craftirc_enabled']) {
+            $user = $message[0];
+            $parameters = array_splice($message, 1);
+            $this->bot->plugin_event("command_" . substr($message[0], 1), $user, $args[0], array_splice($parameters, 1));
+            
+        }
         else {
             //cba
             //$this->bot->plugin_event("message);

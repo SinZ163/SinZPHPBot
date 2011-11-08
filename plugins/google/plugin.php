@@ -5,12 +5,9 @@ class google {
         $this->bot = $bot;
     }
     public function command_g($user, $channel, $args) {
-        $search = implode("+", $args);
-        $url = "http://ajax.googleapis.com/ajax/services/search/web?v=1.0&q=".$search;
-        $result = json_decode($url, true);
-        echo $test;
-        return $result;
-        $this->bot->say_message($channel, "$result");
+        $key = "AIzaSyCHdXQAsYQwspXqS-POLh9RTSv0xlwUO1o";
+        $data = file_get_contents("https://www.googleapis.com/customsearch/v1?key=".$key."&cx=017576662512468239146:omuauf_lfve&q=".implode("+",$args)."&callback=hndlr");
+        $this->bot->privmsg($channel, $data);
     }
     public function command_calc($user, $channel, $args) {
 		$calc = implode(" ",$args);
@@ -20,8 +17,17 @@ class google {
 		$data = preg_replace("/<sup>(.*?)<\/sup>/", '^$1', $data);
 		$data = json_decode($data,1);
 		//foreach ($data as &$node) { $node = html_entity_decode($node); }
-		$this->bot->say_message($channel, $data["lhs"]." = ".$data["rhs"]);	
-		$this->bot->say_message($channel, json_encode(array($data[error], $data[icc], $calc)));
+		$this->bot->privmsg($channel, $data["lhs"]." = ".$data["rhs"]);	
+		//$this->bot->privmsg($channel, json_encode(array($data[error], $data[icc], $calc))); //DEBUG
 	}
+    public function command_urlShort($user, $channel, $args) {
+        $ch = curl_init("https://www.googleapis.com/urlshortener/v1/url");
+        curl_setopt($ch, CURLOPT_HTTPHEADER, "['Content-Type: application/json']");
+        curl_setopt($ch, CURLOPT_POSTFIELDS, '{"longUrl": "{$args[0]}"}');
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        $msg = curl_exec($ch);
+        $result = json_decode($msg);
+        $this->bot->privmsg($channel, $result['id']);
+    }
 }
 ?>
