@@ -4,15 +4,15 @@ The commands currently in it.
 Developers are:
 ylt
 SinZ
-clone1018
+Assistants are:
 Contrillion
 
-TO DO
+TO DO:
 Website
 Web Control Panel
-MongoDB Logging
-MySQL Logging
-File Logging
+Logging
+MySQL Logging / config
+File Logging / config
 Permissions
 Higher-Quality config
 Make this readme better
