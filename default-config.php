@@ -19,7 +19,6 @@ $config['nick']    = 'SinZBot';
 $config['ident']   = 'SinZBot';
 $config['realname']= 'SinZBot';
 $config['command'] = '!';
-$config['notes_prefix'] = '?'; // NOT READY YET
 
 $config['channels']= array('#sinzbot');
 $config['admins']  = array('SinZ');
@@ -30,6 +29,11 @@ $config['ns_enabled'] = false;
 $config['ns_nickserv'] = 'NickServ';
 $config['ns_pass'] = 'qwertyuiop';
 $config['ns_sla'] = false;
+
+/* FAQ */
+$config['faq_enabled'] = false;
+$config['faq_prefix'] = "?";
+$config['faq_admin'] = array("SinZ");
 
 /* CTCP */
 $config['ctcp_ping']    = 'default';

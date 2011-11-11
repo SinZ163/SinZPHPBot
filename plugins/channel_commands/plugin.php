@@ -66,5 +66,15 @@ class channel_commands {
 			$this->bot->send_message("", "MODE ".$channel." -q ".$args[0]);
 		//}
     }
+	public function command_ban($user, $channel, $args) {
+		$this->bot->send_message("", "MODE", $channel, "+b", $args[0]);
+	}
+	public function command_kick($user, $channel, $args) {
+		$this->bot->send_message("", "KICK", $channel, implode(" ", $args));
+	}
+	public function command_kickban($user, $channel, $args) {
+		$this->bot->send_message("", "MODE", $channel, "+b", $args[0]);
+		$this->bot->send_message("", "KICK", $channel, implode(" ", $args));
+	}
 }
 ?>

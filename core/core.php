@@ -35,7 +35,10 @@ class core {
             $this->bot->plugin_event("command_" . substr($message[0], 1), $prefix, $args[0], array_splice($message, 1));}
         /*elseif ($message[0][0] == $this->config['notes_prefix']) { //notes prefix
             //args: user, channel, arguments
-            $this->bot->plugin_event("readNote"), substr($message[0], 1), substr($message[0], 1), $prefix, $args[0], array_splice($message, 1));} */    
+            $this->bot->plugin_event("readNote"), substr($message[0], 1), substr($message[0], 1), $prefix, $args[0], array_splice($message, 1));} */
+		elseif ($message[0][0] == $this->config['faq_prefix'] && $this->config['faq_enabled'] == true) {
+			$this->bot->plugin_event("faq", array_splice($message, 1));
+		}
         elseif ($name[0] == $this->config['craftirc'] && $this->config['craftirc_enabled']) {
             $user = $message[0];
             $parameters = array_splice($message, 1);
