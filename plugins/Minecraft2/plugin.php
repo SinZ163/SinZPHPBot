@@ -6,6 +6,8 @@ class Minecraft2 {
         $this->bot = $bot;
         include("ping.php");
         $this->mcping = new mcping;
+		include("query.php");
+		$this->mcquery = new mcquery;
     }
     public function command_paid($user, $channel, $args) {
         if (!(user::IPhasPermission("plugin.minecraft.paid", $user))) {
@@ -39,33 +41,19 @@ class Minecraft2 {
     }
     
     public function command_mcmotd($user, $channel, $args) {
-        $port = $args[1];
+        $hostmark = $this->getIP_Port($args[0], $args[1]);
+		$ip = $hostmark[0];
+		$port = $hostmark[1];
         $info = $this->mcping->ping($ip, $port);
         $motd = $srvinfo["motd"];
         $this->bot->privmsg($channel, "The MOTD for ".$ip." is ".$motd);
     }
     
     public function command_mcping($user, $channel, $args) {
-        // ip check
-        foreach ($args[0] as $letter) {
-            if ($letter == ":") {
-                $q = true;
-            }
-        }
-        if ($q) {
-            $address = explode(":", $args[0]);
-            $ip = $address[0];
-            $port = $address[1];
-        }
-        else $ip = $args[0];
-        // port check
-        if ($args[1] && $port == false) {
-            $port = $args[1];
-        }
-        elseif ($port == false) {
-            $port = 25565;
-        }
-        // actual script
+		$hostmark = $this->getIP_Port($args[0], $args[1]);
+		$ip = $args[0];
+		$port = $args[1];
+		
         $srvinfo = $this->mcping->ping($ip, $port);
         if ($srvinfo) {
         	$motd = $srvinfo['motd'];
@@ -80,13 +68,65 @@ class Minecraft2 {
     }
     
     public function command_mcplayers($user, $channel, $args) {
-        $ip = $args[0];
-	$port = $args[1];
+		$hostmark = $this->getIP_Port($args[0], $args[1]);
+		$ip = $hostmark[0];
+		$port = $hostmark[1];
         $srvinfo = $this->mcping->ping($ip, $port);
         $players = $srvinfo["players"];
         $max_players = $srvinfo["max_players"];
         $this->bot->privmsg($channel, "Their is currently ".$players."/".$max_players." on ".$ip);
     }
+	
+	
+	public function command_mcquery($user, $channel, $args) {
+		$hostmark = $this->getIP_Port($args[0], $args[1]);
+		$ip = $args[0];
+		$port = $args[1];
+		$info = $this->mcquery->query($ip, $port);
+		if ($info) {
+			$this->bot->privmsg($channel, "Server: ".$info->hostname.":".$info->hostport." running on ".$info->version);
+		}
+		else $this->bot->privmsg($channel, "Cannot connect to udp://".$ip.":".$port.".");
+	}
+	public function command_mclist($user, $channel, $args) {
+		$hostmark = $this->getIP_Port($args[0], $args[1]);
+		$ip = $args[0];
+		$port = $args[1];
+		$info = $this->mcquery->query($ip, $port);
+		if ($info) {
+			if ($info->players) {
+				foreach ($info->players as $index=>$player) {
+					$msg .= $player.chr(2)." || ".chr(2);
+				}
+				$msg = substr($msg, 0, -4);
+				$this->bot->privmsg($channel, $msg);
+			}
+			else $this->bot->privmsg($channel, "No players on udp://".$ip.":".$port.".");
+		}
+		else $this->bot->privmsg($channel, "Cannot connect to udp://".$ip.":".$port.".");
+	}
+	
+	public function getIP_Port($arg1, $arg2) {
+	    // ip check
+        $pos = strpos($arg1, ":");
+		if ($pos === true) {
+			$q = true;
+		}
+        if ($q) {
+            $address = explode(":", $args1);
+            $ip = $address[0];
+            $port = $address[1];
+        }
+        else $ip = $args1;
+        // port check
+        if ($args2 && $port == false) {
+            $port = $args2;
+        }
+        elseif ($port == false) {
+            $port = 25565;
+        }
+		return array($ip, $port);
+	}
 }
 
 ?>

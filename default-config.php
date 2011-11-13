@@ -26,7 +26,9 @@ $config['admins']  = array('SinZ');
 
 /* Nick Server */
 $config['ns_enabled'] = false;
+$config['ns_sasl'] = false; //Do not use unless you know what it is!!!
 $config['ns_nickserv'] = 'NickServ';
+$config['ns_user'] = ''; // DO NOT USE UNLESS YOUR USING A DIFFERENT NICKSERV ACCOUNT!!!
 $config['ns_pass'] = 'qwertyuiop';
 $config['ns_sla'] = false;
 

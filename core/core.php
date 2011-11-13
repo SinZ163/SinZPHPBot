@@ -22,7 +22,24 @@ class core {
             $this->bot->privmsg($this->config['ns_nickserv'], $ns_msg);
         }
     }
-
+	
+	/*START SASL*/
+	public function network_CAP($prefix, $command, $args) {
+		$this->bot->send_message("", "AUTHENTICATE", "PLAIN");
+	}
+	public function network_AUTHENTICATE($prefix, $command, $args) {
+		if ($this->config["ns_user"] != true) {
+			$nick = $this->config["nick"];
+			}
+		else $nick = $this->config["ns_user"];
+		$base_64 = base64_encode($nick."\0".$nick."\0".$this->config["ns_pass"]);
+		$this->bot->send_message("", "AUTHENTICATE", $base_64);
+	}
+	public function network_903($prefix, $command, $args) {
+		$this->bot->send_message("", "CAP", "END");
+	}
+	/*END SASL*/
+	
     public function network_ping($prefix, $command, $args) {
         $this->bot->send_message("", "PONG", $args[0]);
     }

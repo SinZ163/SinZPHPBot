@@ -61,6 +61,9 @@ class bot {
         $this->sock = fsockopen($this->config['network'], $this->config['port'], $errno, $errstr, 5);
         stream_set_timeout($this->sock, 2);
         $errorlevel = stream_get_meta_data($this->sock);
+		if ($this->config['ns_sasl']) {
+			$this->send_message("", "CAP", "REQ :sasl");
+		}
 
         $this->send_message("", "NICK", $this->config['nick']);
         $this->send_message("", "USER", $this->config['ident'], "8", "*", $this->config['realname']);
