@@ -1,2 +1,0 @@
-<?php
-// MongoDB PHP Library
