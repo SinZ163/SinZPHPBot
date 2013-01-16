@@ -1,6 +1,0 @@
-irc.esper.net
-6667
-MCABot
-MCABot
-MCABot
-#SinZBot

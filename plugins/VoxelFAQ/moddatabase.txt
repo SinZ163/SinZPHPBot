@@ -1,0 +1,12 @@
+forge|To get a copy of forge, Go to: https://file.minecraftforge.net;;Or download the latest version at: http://files.minecraftforge.net/minecraftforge/minecraftforge-universal-latest.zip;;See also, @@ forge/guide
+forge/guide|see http://www.minecraftforum.net/topic/1583649-how-to-install-forge-mods/ for a detailed guide on the subject
+
+computercraft|For ComputerCraft help, join #computercraft
+FTB|For Feed the Beast modpack help, join #FTB
+Forestry|For Forestry, join #forestry
+RP|For Redpower2 help, join #redpower
+
+IDConflict|For ID Conflicts, the easiest solution is to install IDResolver;;See also: @@ IDResolver
+IDResolver|You can download IDResolver at http://www.minecraftforum.net/topic/366377-146id-resolver-now-supports-smp-sort-of/
+
+suggestion|Please give some feedback and suggestions for the channel;;Link is: https://docs.google.com/a/d3s.co/spreadsheet/viewform?formkey=dFBKRHd4d3FUSFlXTFNIWS0zTnhFR1E6MQ
