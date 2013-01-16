@@ -34,7 +34,7 @@ class user {
 		return true;
 	}
     public function isAdmin($user){
-        $hostmark = user::explodeIP($user);
+        $hostmark = $this->explodeIP($user);
         $nick = $hostmark[0];
         $admins = $this->config['admins'];
         foreach ($admins as $admin) {

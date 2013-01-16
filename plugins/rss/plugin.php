@@ -10,14 +10,14 @@ class rss {
 		$this->bot = $bot;
 	}
 	public function command_rss($user, $channel, $args) {
-		$rssarray = $this->rss($args[0], $channel);
+		$rssarray = $this->dorss($args[0], $channel);
 		foreach($rssarray as $rss) {
 			$chr = chr(2);
 			$msg = $msg.$rss['title']."".chr(2).' || '.chr(2);
 		}
 		$this->bot->say_message($channel, $msg);
 	}
-	public function rss($url, $channel) {
+	public function dorss($url, $channel) {
 		$RSS_Content = array();
 		$doc  = new DOMDocument();
 		$doc->load($url);

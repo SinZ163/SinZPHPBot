@@ -2,8 +2,11 @@
 
 class bot {
 
-    public function bot($config) {
+    public $user = null;
+    
+    public function bot($config, $user) {
         $this->config = $config;
+        $this->user = $user;
     }
 
     private $modules = array();
@@ -121,14 +124,16 @@ class bot {
             $line = fgets($this->sock);
             list($prefix, $command, $args) = $this->parse_message($line);
             //echo "prefix: {$prefix}, args: ",json_encode($args),"\n";
-            echo json_encode(array($prefix, $command, $args)), "\n";
+			if ($prefix != "") {
+			    echo json_encode(array($prefix, $command, $args)), "\n";
+			}
             $this->plugin_event("network_{$command}", $prefix, $command, $args);
             $this->flush_message();
         }
     }
     public function pluginload() {
         foreach($this->config['plugins'] as $plugin) {
-            include 'plugins/'. $plugin .'/plugin.php';
+            include ('plugins/'. $plugin .'/plugin.php');
             $this->plugin_register(new $plugin($config));
         }
     }

@@ -8,7 +8,7 @@ class FAQ {
         $this->bot = $bot;
     }
 
-    public function faq($subject) {
+    public function onFAQ($subject) {
         $subject = ucwords(strtolower(implode(" ", $subject)));
         $file = file("faq/".$subject.".txt");
         foreach ($file as $faq) {

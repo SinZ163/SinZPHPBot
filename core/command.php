@@ -74,9 +74,13 @@ class command {
             $this->bot->notice($user, "You are not authorized to use eval");
         }
         else {
+        require_once("eval.php");
         $message = implode(" ", $args);
-        $this->bot->privmsg($channel, eval("return " . substr($message, 0)));
-    }}
+        $evaluate = new evaluate($message);
+        $return = $evaluate->start();
+        $this->bot->privmsg($channel, $message);
+		}
+    }
 
     public function command_port($user, $channel, $args) {
         $fp = fsockopen($args[0], $args[1], $errno, $errstr, 10);
@@ -103,9 +107,6 @@ class command {
         $this->bot->plugin_register(new $args[1]());
     }*/
 
-    public function command_trollface($user, $channel, $args) {
-        $this->bot->privmsg($channel, "http://www.ciscolife.ca/trollface.png");
-    }
     /* public function command_reload($user, $channels, $args) {
       if(user::isAdmin($args[0])) {
       // Figure out how to reload
@@ -115,15 +116,18 @@ class command {
 
     /* TEMPORARY SPOT FOR PLUGIN COMMANDS */
 
-    /*public function command_loadedplugins($user, $channel, $args) {
-        foreach ($this->config['plugins'] as $plugin) {
-            $this->bot->privmsg($channel, "$plugin");
-        }
+    public function command_loadedplugins($user, $channel, $args) {
+		$this->bot->privmsg($channel, implode(", ", $this->config['plugins']));
     }
 
     public function command_pluginload($user, $channel, $args) {
-        include "./plugins/$args[0]/plugin.php";
-        $this->$bot->plugin_register(new $args[0]($this->config));
-    }*/
+        include_once "./plugins/$args[0]/plugin.php";
+        $this->bot->plugin_register(new $args[0]($this->config));
+    }
+	
+	public function command_reload($user, $channel, $args) {
+		$this->bot->pluginload();
+		$this->bot->privmsg($channel, "Reloaded.");
+	}
 
 }
