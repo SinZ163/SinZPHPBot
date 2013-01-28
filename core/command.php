@@ -70,15 +70,17 @@ class command {
     }
 
     public function command_eval($user, $channel, $args) {
-        if (!(user::isAdmin($user))) {
+        if (!($this->bot->user->isAdmin($user))) {
             $this->bot->notice($user, "You are not authorized to use eval");
         }
         else {
-        require_once("eval.php");
+            $message = implode(" ", $args);
+            $this->bot->privmsg($channel, eval("return " . substr($message, 0)));
+        /*require_once("eval.php");
         $message = implode(" ", $args);
         $evaluate = new evaluate($message);
         $return = $evaluate->start();
-        $this->bot->privmsg($channel, $message);
+        $this->bot->privmsg($channel, $message);*/
 		}
     }
 

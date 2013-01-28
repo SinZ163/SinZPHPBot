@@ -16,9 +16,9 @@ class Minecraft2 {
             $url = file_get_contents("http://www.minecraft.net/haspaid.jsp?user=" . urlencode($args[0]));
 
             if ($url == "true") {
-                $this->bot->privmsg($channel, $args[0] . " has paid for Minecraft, I'll give him a hug some other time!");
+                $this->bot->privmsg($channel, $args[0] . " has paid for Minecraft.");
             } else {
-                $this->bot->privmsg($channel, $args[0] . " hasn't paid for Minecraft!, That bastard!");
+                $this->bot->privmsg($channel, $args[0] . " hasn't paid for Minecraft!");
             }
         }
     }
@@ -118,13 +118,13 @@ class Minecraft2 {
 		} else if( count( $host ) == 1 ) {
 			$ip = $host[0];
 			$port = 25565;
-		} else if( count( $host ) > 2 ) {
-			die( "What the hell kind of host i? this?\n".print_r( $host ) );
+		//} else if( count( $host ) > 2 ) {
+		//	die( "What the hell kind of host i? this?\n".print_r( $host ) );
 		}
 		if( $arg2 ) {
 			$port = $arg2;
 		}
-		$this->bot->privmsg($channel, json_encode( array( $ip, $port ) ));
+		//$this->bot->privmsg($channel, json_encode( array( $ip, $port ) ));
 		return array( $ip, $port );
 	}
 }
