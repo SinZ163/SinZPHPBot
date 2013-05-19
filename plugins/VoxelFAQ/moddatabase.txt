@@ -15,3 +15,4 @@ sinzbot|The source-code for the bot is available at: http://github.com/SinZ163/S
 
 checklogin|For further info about login down, check out http://xpaw.ru/mcstatus/#
 mojang/paid|For existing help topics about having paid, check out http://help.mojang.com/customer/portal/articles/search?q=paid
+mojang/eta|For knowing when you will hear back, check out http://help.mojang.com/customer/portal/articles/359446-when-will-i-hear-back-

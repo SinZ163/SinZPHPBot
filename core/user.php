@@ -5,9 +5,7 @@ class user {
 	public function plugin_registered($bot) {
 		$this->bot = $bot;
 	}
-    public function __construct($config) {
-        $this->config = $config;
-    }
+
 	public function explodeIP($ip) { // turns $ip which is a string, nick!ident@hostmark into $result which is an array, 0 = nick, 1 = ident, 2 = hostmark
 		$address = explode("@", $ip);
 		$hostmark = $address[1];
@@ -23,7 +21,7 @@ class user {
 		return $ip;
 	}
 	public function hasPermission($node, $ip, $default = false) {
-		$user = explodeIP($ip);
+		$user = $this->bot->user->explodeIP($ip);
 		$nick = $user[0];
 		$ident = $user[1];
 		$hostmark = $user[2];
@@ -34,14 +32,24 @@ class user {
 		return true;
 	}
     public function isAdmin($user){
-        $hostmark = $this->explodeIP($user);
-        $nick = $hostmark[0];
-        $admins = $this->config['admins'];
-        foreach ($admins as $admin) {
-            echo $admin;
-            echo $nick;
-            if ($nick == $admin) {
+        return true;
+		$address = explode("@", $user);
+		$hostmark = $address[1];
+		$nick_ident = explode("!", $address[0]);
+        $nick = $nick_ident[0];
+        $admins = $this->bot->config['admins'];
+        $this->bot->privmsg("#SinZationalMinecraft", json_encode($this->bot->config['admins']));
+        if (count($admins) == 1) {
+            $this->bot->privmsg("#SinZationalMinecraft", $nick."|".$admins[0]);
+            if ($nick == $admins[0]) {
                 return true;
+            }
+        } else {
+            foreach ($admins as $admin) {
+                $this->bot->privmsg("#SinZationalMinecraft", $nick."|".$admin);
+                if ($nick == $admin) {
+                    return true;
+                }
             }
         }
         return false;

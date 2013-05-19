@@ -1,6 +1,7 @@
 <?php
 class channel_commands {
-    private $bot = null;
+    private $bot = null;    
+    
     public function plugin_registered($bot) {
         $this->bot = $bot;
     }
@@ -64,7 +65,7 @@ class channel_commands {
 	}
 	public function command_kick($user, $channel, $args) {
     	if ($this->bot->user->isAdmin($user)) {
-            $this->bot->send_message("", "KICK", $channel, implode(" ", $args));
+            $this->bot->send_message("", "KICK", $channel, ":".implode(" ", $args));
 		}
 		else $this->bot->notice($channel, "You are not authorised to use this command.");
 	}

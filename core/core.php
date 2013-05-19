@@ -17,7 +17,7 @@ class core {
 		$this->bot->send_message("", "AUTHENTICATE", "PLAIN");
 	}
 	public function network_AUTHENTICATE($prefix, $command, $args) {
-		if ($this->config["ns_user"] != true) {
+		if ($this->config["ns_user"] == "") {
 			$nick = $this->config["nick"];
 		}
 		else $nick = $this->config["ns_user"];

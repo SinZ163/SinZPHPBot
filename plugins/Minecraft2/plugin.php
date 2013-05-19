@@ -50,6 +50,11 @@ class Minecraft2 {
     }
     
     public function command_mcping($user, $channel, $args) {
+        $address = $this->bot->user->explodeIP($user);
+        if ($args[0] == "") {
+            $args[0] = $address[2];
+        }
+        
         $hostmark = $this->getIP_Port($args[0], $args[1]);
         $ip = $hostmark[0];
         $port = $hostmark[1];
@@ -107,7 +112,29 @@ class Minecraft2 {
 		}
 		else $this->bot->privmsg($channel, "Cannot connect to udp://".$ip.":".$port.".");
 	}
-	
+    public function command_mcplugins($user, $channel, $args) {
+        $hostmark = $this->getIP_Port($args[0], $args[1]);
+        $ip = $args[0];
+        $port = $args[1];
+        $info = $this->mcquery->query($ip, $port);
+        if ($info) {
+            print_r($info);
+            $this->bot->privmsg($channel, "|".$info->server_mod);
+            if ($info->plugins) {
+                $msg = implode(chr(2)." || ".chr(2),$info->plugins);
+				$this->bot->privmsg($channel, $msg);
+			}
+			else $this->bot->privmsg($channel, "No plugins on udp://".$ip.":".$port.".");
+		}
+		else $this->bot->privmsg($channel, "Cannot connect to udp://".$ip.":".$port.".");
+	}
+    public function command_mojangETA($user, $channel, $args) {
+        $url = "http://help.mojang.com/customer/portal/articles/359446-when-will-i-hear-back-";
+        $str = file_get_contents($url);
+        $pattern = "/<strong ?.*>(.*)<\/strong>/";
+        preg_match($pattern, $str, $txt);
+        $this->bot->privmsg($channel, "Mojang are currently processing emails on ".$txt[1]);
+    }
 	public function getIP_Port($arg1, $arg2) {
 		// Check for a colon
 		$host = explode( ':', $arg1 );

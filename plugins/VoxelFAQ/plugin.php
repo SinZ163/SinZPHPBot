@@ -20,9 +20,9 @@ class VoxelFAQ {
         $file       =  file($filename);
         $modfile    =  file( $moddb);
 		if (!$file or !$modfile) {
-			print("~~~~~~~ERROR~~~~~~~\r\n");
+			print("~~~~~~~ERROR~~~~~~~~\r\n");
 			print("~~ DATABASE ERROR ~~\r\n");
-			print("~~~~~~~ERROR~~~~~~~\r\n");
+			print("~~~~~~~ERROR~~~~~~~~\r\n");
 			return false;
 		}
         $db = array();
@@ -71,18 +71,16 @@ class VoxelFAQ {
                         $this->bot->privmsg($channel, $bold.$message.": ".$bold.$output);
                     }
                 }
-            } else {
-                $this->bot->privmsg($channel, "Unknown factoid: ".$bold.$message.$bold);
             }
     }
     public function network_PRIVMSG($prefix, $command, $args) {
+        $message = explode(" ", $args[1]);
+            
         $user = $prefix;
         $channel = $args[0];
-        $message = explode(" ", $args[1]);
-        $target = substr($message[0], 1);
         $args= array_splice($message, 1);
-        $bold = chr(2);
-        if ($this->voxelhead[$channel] == "true") {
+        
+        if ($this->voxelhead[$channel] == "true") { //TODO: switch case this
             if ($message[0][0] == "?" & $message[0][1] == "?") {
                 if ($message[0][2] == ">") {
                     if ($message[0][3] == ">") {
@@ -98,16 +96,11 @@ class VoxelFAQ {
             }
         }
         if ($message[0][0] == "@") {
-            if ($msg) {
-                foreach ($msg as $output) {
-                    if ($target != "" and $target != "@") {
-                        $this->bot->privmsg($channel, $bold.$target.": ".$bold."(".$args[0].") ".$output);
-                    } else {
-                        $this->bot->privmsg($channel, $bold.$args[0].": ".$bold.$output);
-                    }
-                }
+            $target = substr($message[0], 1);
+            if ($target != "" and $target != "@") {
+                $this->privmsgDB($args[0], $channel, $target);
             } else {
-                $this->bot->privmsg($channel, "Unknown factoid: ".$bold.$args[0].$bold);
+                $this->privmsgDB($args[0], $channel);
             }
         }
     }
@@ -115,13 +108,17 @@ class VoxelFAQ {
         $this->privmsgDB($args[0], $channel);
 	}
     public function command_addFactoid($user, $channel, $args) {
-        $moddb = './plugins/VoxelFAQ/moddatabase.txt';
-        $modfile = file($moddb);
-        if (!$modfile) {
-            $this->bot->privmsg($channel, "Failed to access database");
-            return;
+        if ($this->readDB($args[0])) {
+            $this->bot->notice($user, "This factoid already exists.");
+        } else {
+            $moddb = './plugins/VoxelFAQ/moddatabase.txt';
+            $modfile = fopen($moddb, "a");
+            fwrite($modfile, $args[0]."|".implode(" ", array_splice($args, 1)));
+            fclose($modfile);
+            
+            $this->initDB();
+            $this->bot->privmsg($channel, "Successfully added this factoid to the VoxelFAQ database.");
         }
-        
     }
     public function command_reloadDB($user, $channel, $args) {
         $this->initDB();
@@ -130,14 +127,29 @@ class VoxelFAQ {
     public function command_updateVoxelDB($user, $channel, $args) {
         $this->updateDB();
         $this->initDB();
-        $this->bot->privmsg($channel, "Successfully reloaded the VoxelHead Database.");
+        $this->bot->privmsg($channel, "Successfully redownloaded the VoxelHead Database.");
     }
     
     public function command_toggleVoxelhead($user, $channel, $args) {
-        if ($this->voxelhead[$args[0]] == "true") {
-            $this->voxelhead[$args[0]] = "false";
+        if ($this->voxelhead[$channel] == "true") {
+            $this->voxelhead[$channel] = "false";
         } else {
-            $this->voxelhead[$args[0]] = "true";
+            $this->voxelhead[$channel] = "true";
+        }
+    }
+    
+    
+    public function network_QUIT($prefix, $command, $args) {
+        $hostmark = $this->bot->user->explodeIP($prefix);
+        if ($hostmark[0] == "VoxelHead") {
+            $this->voxelhead["#minecrafthelp"] = "true";
+            $this->voxelhead["##voxelhead"] = "true";
+        }
+    }
+    public function network_JOIN($prefix, $command, $args) {
+            $hostmark = $this->bot->user->explodeIP($prefix);
+        if ($hostmark[0] == "VoxelHead") {
+            $this->voxelhead[$args[0]] = "false";
         }
     }
 }

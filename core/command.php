@@ -4,10 +4,6 @@ class command {
 
     private $bot = null;
 
-    public function command($config) {
-        $this->config = $config;
-    }
-
     public function plugin_registered($bot) {
         $this->bot = $bot;
     }
@@ -75,7 +71,7 @@ class command {
         }
         else {
             $message = implode(" ", $args);
-            $this->bot->privmsg($channel, eval("return " . substr($message, 0)));
+            $this->bot->privmsg($channel, eval(substr($message, 0)));
         /*require_once("eval.php");
         $message = implode(" ", $args);
         $evaluate = new evaluate($message);
@@ -96,7 +92,7 @@ class command {
     }
 
     public function command_admins($user, $channel, $args) {
-        $list = implode(" ", $this->config['admins']);
+        $list = implode(", ", $this->bot->config['admins']);
         $this->bot->privmsg($channel, $list);
     }
     public function command_pastebin($user, $channel, $args) {
