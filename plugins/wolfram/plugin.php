@@ -6,27 +6,41 @@ class wolfram {
         //include_once("WolframAlphaEngine.php");
         //$this->wolfram = new WolframAlphaEngine("LV28TW-RA783QRGUK");
     }
-    public function Parse ($url) {
+    public function Parse($url) {
         $fileContents= file_get_contents($url);
-        $fileContents = str_replace(array("\n", "\r", "\t"), '', $fileContents);
-        $fileContents = trim(str_replace('"', "'", $fileContents));
         $simpleXml = simplexml_load_string($fileContents);
-        $json = json_encode($simpleXml);
 
-        return $json;
+        return $simpleXml;
     }
     public function getResults($args) {
         $url = "http://api.wolframalpha.com/v1/query.jsp";
         $appID = "LV28TW-RA783QRGUK";
         $input = implode(" ",$args);
-        $json = $this->Parse($url."?appid=".urlencode($appID)."&input=".urlencode($input));
-        return $json;
+        $xml = $this->Parse($url."?appid=".urlencode($appID)."&input=".urlencode($input));
+        $results = array();
+        foreach($xml->pod as $pod) {
+            // skip input pod
+            if($pod['id'] == "Input") continue;
+
+            foreach($pod->subpod as $subpod) {
+                if(!empty($subpod->plaintext)) {
+                    $text = $subpod->plaintext;
+                    if(strpos($subpod->plaintext, ': ') === false)
+                        $text = str_replace(' | ', ': ', $text);
+                    $text = str_replace(array("\r", "\n"), ' | ', $text);
+                    $text = trim($text, ' |');
+                    $results[] = "\002{$pod['title']}:\002 {$text}";
+                    break;
+                }
+            }
+        }
+        return $results;
     }
     public function command_wolfram($user, $channel, $args) {
-        $result = $this->getResults($args);
-        $array = json_decode($result,true);
+        $results = $this->getResults($args);
         
-        print_r($array['pod'][1]['subpod']['plaintext']);
-        $this->bot->privmsg($channel, $array['pod'][1]['subpod']['plaintext']);
+        print_r($results);
+        foreach($results as $line)
+            $this->bot->privmsg($channel, $line);
     }
 }
